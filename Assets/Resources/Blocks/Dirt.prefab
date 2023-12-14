@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc454619d4ea47a0b801907c31e83a6e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BlockName: dirt
+  BlockName: Dirt
   Type: 1
   TextureType: 1
   BlockStates:

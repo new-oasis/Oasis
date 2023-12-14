@@ -10,7 +10,6 @@ namespace Oasis.Models
 {
     public class ModelAuthoring : MonoBehaviour
     {
-        public string ModelName;
         public BlockType Type;
         public TextureType TextureType;
         public List<ModelElementAuthoring> ModelElements;
@@ -22,7 +21,7 @@ namespace Oasis.Models
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new Model
                 {
-                    Name = authoring.ModelName,
+                    Name = authoring.gameObject.name,
                     Type = authoring.Type,
                     TextureType = authoring.TextureType,
                 });

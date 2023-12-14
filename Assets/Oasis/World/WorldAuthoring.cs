@@ -15,6 +15,7 @@ namespace Oasis.World
         public List<GameObject> blockStates;
 
         public GameObject dirtBlockState;
+        public GameObject grassBlockState;
 
         private class WorldBaker : Baker<WorldAuthoring>
         {
@@ -42,20 +43,18 @@ namespace Oasis.World
                 
                 // TODO Update below with working Comparer
                 var dirtEntity = GetEntity(authoring.dirtBlockState, TransformUsageFlags.None);
-                var dirtBlockStateIndex = blockStates.AsNativeArray().IndexOf(new BlockStateReference {Value = dirtEntity});
-                ComputeVoxels(authoring.worldType, authoring.dims, dirtBlockStateIndex, voxels);
-            }
+                var dirtIndex = (byte)blockStates.AsNativeArray().IndexOf(new BlockStateReference {Value = dirtEntity});
+                
+                var grassEntity = GetEntity(authoring.grassBlockState, TransformUsageFlags.None);
+                var grassIndex = (byte)blockStates.AsNativeArray().IndexOf(new BlockStateReference {Value = grassEntity});
 
-            private void ComputeVoxels(WorldType worldType, int3 dims, int dirtIndex, DynamicBuffer<Voxel> voxels)
-            {
-                Debug.Log("Compute Voxels");
                 for (var i = 0; i < voxels.Length; i++)
                 {
-                    var xyz = i.ToInt3(dims);
-                    if (worldType == WorldType.Flat)
-                        voxels[i] = new Voxel{Value = (ushort) (xyz.y < 1 ? dirtIndex : 0)};
+                    var xyz = i.ToInt3(authoring.dims);
+                    if (authoring.worldType == WorldType.Flat)
+                        voxels[i] = new Voxel{Value = (ushort) (xyz.y < 1 ? grassIndex : 0)};
 
-                    else if (worldType == WorldType.Hills)
+                    else if (authoring.worldType == WorldType.Hills)
                     {
                         var scale = 0.1f;
                         var amplitude = 5.0f;
@@ -63,12 +62,12 @@ namespace Oasis.World
                         var zCoord = xyz.z * scale;
                         var height = Mathf.PerlinNoise(xCoord, zCoord) * amplitude;
 
-                        // if (xyz.y < height - 1f)
-                        //     voxels[i] = (ushort) BlockStates.FindIndex(b => b.Block.name == "Dirt");
-                        // else if (xyz.y < height)
-                        //     voxels[i] = (ushort) BlockStates.FindIndex(b => b.Block.name == "Grass Block");
-                        // else
-                        //     voxels[i] = AirIndex;
+                        if (xyz.y < height - 1f)
+                            voxels[i] = new Voxel{Value = dirtIndex};
+                        else if (xyz.y < height)
+                            voxels[i] = new Voxel{Value = grassIndex};
+                        else
+                            voxels[i] = new Voxel{Value = 0};
                     }
                     // voxels[i] = 1;
                     // Debug.Log(xyz + " = " + voxels[i]);

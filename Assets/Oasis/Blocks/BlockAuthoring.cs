@@ -9,7 +9,6 @@ namespace Oasis.Blocks
 {
     public class BlockAuthoring : MonoBehaviour
     {
-        public string BlockName;
         public BlockType Type;
         public TextureType TextureType;
         public List<GameObject> BlockStates;
@@ -21,7 +20,7 @@ namespace Oasis.Blocks
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new Block
                 {
-                    Name = new FixedString64Bytes(authoring.BlockName),
+                    Name = new FixedString64Bytes(authoring.gameObject.name),
                     Type = authoring.Type,
                     TextureType = authoring.TextureType
                 });

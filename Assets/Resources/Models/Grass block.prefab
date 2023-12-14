@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6003895097730195392}
   - component: {fileID: 6423179808682251641}
   m_Layer: 0
-  m_Name: Dirt
+  m_Name: Grass block
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8717addb77f423b920919affbc42160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ModelName: Dirt
+  ModelName: Grass block
   Type: 1
   TextureType: 1
   ModelElements:

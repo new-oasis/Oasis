@@ -8,7 +8,6 @@ namespace Oasis.Textures
 
     public class TextureAuthoring : MonoBehaviour
     {
-        public string TextureName;
         public TextureType Type;
         public Texture2D Tex;
 
@@ -22,7 +21,7 @@ namespace Oasis.Textures
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new Texture
                 {
-                    TextureName = authoring.TextureName,
+                    TextureName = authoring.gameObject.name,
                     Type = authoring.Type,
                     Index = (byte)index,
                 });

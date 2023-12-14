@@ -50,7 +50,6 @@ namespace Oasis.Mesher
                 var voxelXyz = new int3(x, y, z) + chunkStart;
                 var voxelIndex = voxelXyz.ToIndex(worldDims);
                 var voxel = voxels[voxelIndex];
-                Debug.Log("voxel: " + voxel);
 
                 for (var side = 0; side < 6; side++)
                 {
@@ -81,7 +80,6 @@ namespace Oasis.Mesher
                         }
                         if (modelFace.Equals(default(ModelFace)))
                             Debug.LogError("ModelFace not found for side " + (Side) side);
-                        
                         
                         var texture = em.GetComponentData<Oasis.Textures.Texture>(modelFace.Texture);
 
