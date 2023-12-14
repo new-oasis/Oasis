@@ -32,6 +32,16 @@ namespace Oasis.Models
         // public bool Cullface; // 1 byte
     }
     
+    public struct MyComponent : IComponentData
+    {
+        public Entity MyEntity;
+    }
+
+    public struct MyBuffer : IBufferElementData
+    {
+        public Entity MyEntity;
+    }
+    
 }
 
 

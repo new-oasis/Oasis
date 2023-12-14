@@ -14,7 +14,7 @@ namespace Oasis.World
         public int3 dims;
         public List<GameObject> blockStates;
 
-        [FormerlySerializedAs("dirt")] public GameObject dirtBlockState;
+        public GameObject dirtBlockState;
 
         private class WorldBaker : Baker<WorldAuthoring>
         {
@@ -31,7 +31,7 @@ namespace Oasis.World
                 var blockStates = AddBuffer<BlockStateReference>(entity);
                 foreach (var authoringBlockStateGo in authoring.blockStates)
                 {
-                    Debug.Log("Adding blockstate " + authoringBlockStateGo);
+                    Debug.Log("Adding blockState " + authoringBlockStateGo);
                     blockStates.Add(new BlockStateReference {Value = GetEntity(authoringBlockStateGo)});
                 }
 
@@ -40,9 +40,8 @@ namespace Oasis.World
                 voxels.ResizeUninitialized(authoring.dims.x * authoring.dims.y * authoring.dims.z);
 
                 
-                var dirtEntity = GetEntity(authoring.dirtBlockState, TransformUsageFlags.None);
-                
                 // TODO Update below with working Comparer
+                var dirtEntity = GetEntity(authoring.dirtBlockState, TransformUsageFlags.None);
                 var dirtBlockStateIndex = blockStates.AsNativeArray().IndexOf(new BlockStateReference {Value = dirtEntity});
                 ComputeVoxels(authoring.worldType, authoring.dims, dirtBlockStateIndex, voxels);
             }

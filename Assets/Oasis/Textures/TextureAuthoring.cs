@@ -17,19 +17,21 @@ namespace Oasis.Textures
             public override void Bake(TextureAuthoring authoring)
             {
                 // var index = (byte)TextureManager.Instance.LoadTexture(authoring.Tex, authoring.Type);
-                var index = (byte)0;
+                var index = TextureManager.Instance.LoadTexture(authoring.Tex, authoring.Type);
                 
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new Texture
                 {
                     TextureName = authoring.TextureName,
                     Type = authoring.Type,
-                    Index = index,
+                    Index = (byte)index,
                 });
 
             }
         }
     }
+    
+    
 
 
 }

@@ -11,6 +11,8 @@ namespace Oasis.Models
     public class ModelAuthoring : MonoBehaviour
     {
         public string ModelName;
+        public BlockType Type;
+        public TextureType TextureType;
         public List<ModelElementAuthoring> ModelElements;
         
         public class ModelBaker : Baker<ModelAuthoring>
@@ -20,7 +22,9 @@ namespace Oasis.Models
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new Model
                 {
-                    Name = authoring.ModelName
+                    Name = authoring.ModelName,
+                    Type = authoring.Type,
+                    TextureType = authoring.TextureType,
                 });
                 
                 // ModelElements

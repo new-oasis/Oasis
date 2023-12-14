@@ -93,7 +93,7 @@ public static class Int3ExtensionMethods
     
     public static string ToStr(this int3 i)
     {
-        return i.x + ", " + i.y + ", " + i.z; // TODO stringbuilder for GC
+        return i.x + ", " + i.y + ", " + i.z;
     }
 
     // public static Int3 ToInt3(this int3 i)

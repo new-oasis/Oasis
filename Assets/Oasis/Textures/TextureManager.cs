@@ -29,6 +29,14 @@ namespace Oasis.Textures
             opaqueTexture2DArray = new Texture2DArray(16, 16, maxTextures, TextureFormat.DXT1, false);
             cutoutTexture2DArray = new Texture2DArray(16, 16, maxTextures, TextureFormat.DXT5, false);
             transTexture2DArray = new Texture2DArray(16, 16, maxTextures, TextureFormat.DXT5, false);
+
+            LitMaterials[0].SetTexture("_TextureArray", opaqueTexture2DArray);
+            LitMaterials[1].SetTexture("_TextureArray", cutoutTexture2DArray);
+            LitMaterials[2].SetTexture("_TextureArray", transTexture2DArray);
+
+            UnlitMaterials[0].SetTexture("_TextureArray", opaqueTexture2DArray);
+            UnlitMaterials[1].SetTexture("_TextureArray", cutoutTexture2DArray);
+            UnlitMaterials[2].SetTexture("_TextureArray", transTexture2DArray);
         }
         
         public int LoadTexture(Texture2D texture, TextureType type)
@@ -59,3 +67,4 @@ namespace Oasis.Textures
         }
     }
 }
+

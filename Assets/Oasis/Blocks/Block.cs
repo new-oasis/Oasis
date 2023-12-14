@@ -7,7 +7,6 @@ namespace Oasis.Blocks
     
     public struct Block : IComponentData
     {
-        public int Value;
         public FixedString64Bytes Name;
         public BlockType Type;
         public TextureType TextureType;

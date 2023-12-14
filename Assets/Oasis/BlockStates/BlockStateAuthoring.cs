@@ -23,11 +23,11 @@ namespace Oasis.BlockStates
                 {
                     Block = GetEntity(authoring.block, TransformUsageFlags.None), 
                     States = new FixedList4096Bytes<State>(),
-                    // Model = GetEntity(authoring.model),
+                    Model = GetEntity(authoring.model, TransformUsageFlags.None),
                     
                     // denormalized
                     Type = authoring.block.GetComponent<BlockAuthoring>().Type, 
-                    TextureType = authoring.block.GetComponent<BlockAuthoring>().TextureType
+                    TextureType = authoring.block.GetComponent<BlockAuthoring>().TextureType,
                 };
                 foreach (var state in authoring.states)
                     blockState.States.Add(state);
