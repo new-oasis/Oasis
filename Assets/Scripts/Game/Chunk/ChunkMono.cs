@@ -22,6 +22,7 @@ namespace Oasis.Chunks
             var voxels = em.GetBuffer<Voxel>(worldEntity).AsNativeArray().Reinterpret<ushort>();
             var mesh = Mesher.Mesher.Compute(dims, xyz * dims, world.Dims, voxels);
             GetComponent<MeshFilter>().mesh = mesh;
+            GetComponent<MeshCollider>().sharedMesh = mesh;
         }
         
     }

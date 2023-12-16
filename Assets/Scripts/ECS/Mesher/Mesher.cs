@@ -40,7 +40,6 @@ namespace Oasis.Mesher
             var em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
             var worldEntity = em.CreateEntityQuery(typeof(Oasis.World.World)).GetSingletonEntity();
             var blockStateReferences = em.GetBuffer<BlockStateReference>(worldEntity);
-            Debug.Log("blockStateReferences.Count: " + blockStateReferences.Length);
                     
             // Loop over chunk in world
             for (var x = 0; x < chunkDims.x; x++)
