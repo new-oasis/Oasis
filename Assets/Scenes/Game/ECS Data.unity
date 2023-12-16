@@ -178,15 +178,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldType: 0
   dims:
-    x: 4
-    y: 4
-    z: 4
+    x: 64
+    y: 64
+    z: 64
   blockStates:
   - {fileID: 1106071484}
   - {fileID: 1011032140}
   - {fileID: 407590224}
-  dirtBlockState: {fileID: 0}
-  grassBlockState: {fileID: 0}
+  dirtBlockState: {fileID: 1011032140}
+  grassBlockState: {fileID: 407590224}
 --- !u!4 &166315387
 Transform:
   m_ObjectHideFlags: 0

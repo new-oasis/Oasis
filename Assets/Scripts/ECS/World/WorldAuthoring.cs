@@ -46,6 +46,7 @@ namespace Oasis.World
                 
                 var grassEntity = GetEntity(authoring.grassBlockState, TransformUsageFlags.None);
                 var grassIndex = (byte)blockStates.AsNativeArray().IndexOf(new BlockStateReference {Value = grassEntity});
+                Debug.Log("Grass index " + grassIndex);
 
                 for (var i = 0; i < voxels.Length; i++)
                 {

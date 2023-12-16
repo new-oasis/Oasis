@@ -6,11 +6,13 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using Unity.Entities;
 using Unity.Mathematics;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.Serialization;
 
 public class ToolbarUI : MonoBehaviour
 {
-    [FormerlySerializedAs("ToolbarDataEntity")] public Entity ToolbarEntity;
+    public Entity ToolbarEntity;
     
     private UQueryBuilder<VisualElement> slots;
     private VisualElement toolbar;
@@ -19,9 +21,11 @@ public class ToolbarUI : MonoBehaviour
     public GameObject ToolbarItemGO;
     public GameObject ToolbarItemPrefab;
 
+    private EntityManager em;
+    
     private void Start()
     {
-        var em = World.DefaultGameObjectInjectionWorld.EntityManager;
+        em = World.DefaultGameObjectInjectionWorld.EntityManager;
         var worldEntity = em.CreateEntityQuery(typeof(Oasis.World.World)).GetSingletonEntity();
         var worldBlockStates = em.GetBuffer<BlockStateReference>(worldEntity);
         
@@ -57,17 +61,43 @@ public class ToolbarUI : MonoBehaviour
             slotIndex++;
         }
 
-        // SetActiveItem(0);
+        SetActiveItem(0);
     }
 
+    public void SetActiveItem(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+        if (((KeyControl) context.control).keyCode == Key.Digit1)
+            SetActiveItem(0);
+        else if (((KeyControl) context.control).keyCode == Key.Digit2)
+            SetActiveItem(1);
+        else if (((KeyControl) context.control).keyCode == Key.Digit3)
+            SetActiveItem(2);
+        else if (((KeyControl) context.control).keyCode == Key.Digit4)
+            SetActiveItem(3);
+        else if (((KeyControl) context.control).keyCode == Key.Digit5)
+            SetActiveItem(4);
+        else if (((KeyControl) context.control).keyCode == Key.Digit6)
+            SetActiveItem(5);
+        else if (((KeyControl) context.control).keyCode == Key.Digit7)
+            SetActiveItem(6);
+        else if (((KeyControl) context.control).keyCode == Key.Digit8)
+            SetActiveItem(7);
+        else if (((KeyControl) context.control).keyCode == Key.Digit9)
+            SetActiveItem(8);
+        else if (((KeyControl) context.control).keyCode == Key.Digit0)
+            SetActiveItem(9);
+    }
     
-    // public void SetActiveItem(int slotIndex)
-    // {
-    //     selectedItem = slotIndex;
-    //     currentBlockState = blockStates[slotIndex];
-    //     for (var i = 0; i < 10; i++)
-    //         slots.AtIndex(i).RemoveFromClassList("toolbarSlotActive");
-    //     slots.AtIndex(slotIndex).AddToClassList("toolbarSlotActive");
-    // }
+    public void SetActiveItem(int slotIndex)
+    {
+        var toolbarData = em.CreateEntityQuery(typeof(Toolbar)).GetSingleton<Toolbar>();
+        toolbarData.selectedItem = slotIndex;
+        em.SetComponentData(ToolbarEntity, toolbarData);
+        
+        for (var i = 0; i < 10; i++)
+            slots.AtIndex(i).RemoveFromClassList("toolbarSlotActive");
+        slots.AtIndex(slotIndex).AddToClassList("toolbarSlotActive");
+    }
     
 }
