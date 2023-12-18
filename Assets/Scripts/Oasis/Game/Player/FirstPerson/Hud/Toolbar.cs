@@ -1,4 +1,5 @@
 using Oasis.ECS.BlockStates;
+using Oasis.ECS.Models;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -35,7 +36,7 @@ namespace Oasis.Game.Player.FirstPerson.Hud
             // Get ToolbarDataEntity
             ToolbarEntity = em.CreateEntityQuery(typeof(ToolbarData)).GetSingletonEntity();
             var Toolbar = em.CreateEntityQuery(typeof(ToolbarData)).GetSingleton<ToolbarData>();
-            var toolbarPaletteItems = em.GetBuffer<BlockStateElement>(ToolbarEntity);
+            var toolbarBlockStates = em.GetBuffer<BlockStateElement>(ToolbarEntity);
         
             root = gameObject.GetComponent<UIDocument>().rootVisualElement;
             toolbar = root.Q<VisualElement>("toolbar");
@@ -47,13 +48,18 @@ namespace Oasis.Game.Player.FirstPerson.Hud
 
             // Loop through toolbar paletteItems
             int slotIndex = 0;
-            foreach (var toolbarPaletteItem in toolbarPaletteItems)
+            foreach (var toolbarBlockState in toolbarBlockStates)
             {
-                var toolbarBlockStateIndex = (byte)worldBlockStates.AsNativeArray().IndexOf(toolbarPaletteItem);
-                Debug.Log("toolbarBlockStateIndex " + toolbarBlockStateIndex);
+                var toolbarBlockStateIndex = (byte)worldBlockStates.AsNativeArray().IndexOf(toolbarBlockState);
                 voxels[0] = toolbarBlockStateIndex;
             
-                meshFilter.mesh = Mesher.Mesher.Compute(new int3(1), new int3(0), new int3(1), voxels);
+                // Get blockState model mesh
+                var blockStateEntity = toolbarBlockState.Value;
+                var blockState = em.GetComponentData<BlockState>(blockStateEntity);
+                var modelMesh = em.GetSharedComponentManaged<ModelMesh>(blockState.Model);
+                meshFilter.mesh = modelMesh.Value;
+                // meshFilter.mesh = Mesher.Mesher.Compute(new int3(1), new int3(0), new int3(1), voxels);
+                
                 var texture = Render3D.Render3D.Instance.Snapshot(ToolbarItemGO);
                 var slot = slots.AtIndex(slotIndex);
                 var image = new Image();
@@ -107,8 +113,8 @@ namespace Oasis.Game.Player.FirstPerson.Hud
         public BlockState GetActiveBlockState()
         {
             var toolbarData = em.CreateEntityQuery(typeof(ToolbarData)).GetSingleton<ToolbarData>();
-            var toolbarPaletteItems = em.GetBuffer<BlockStateElement>(ToolbarEntity);
-            var blockStateEntity = toolbarPaletteItems[toolbarData.selectedItem].Value;
+            var toolbarBlockStates = em.GetBuffer<BlockStateElement>(ToolbarEntity);
+            var blockStateEntity = toolbarBlockStates[toolbarData.selectedItem].Value;
             return em.GetComponentData<BlockState>(blockStateEntity);
         }   
     }

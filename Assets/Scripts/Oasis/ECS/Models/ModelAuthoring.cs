@@ -147,7 +147,6 @@ namespace Oasis.ECS.Models
                     AddTris(tris, f);
                     AddTexCoord0(texCoord0, f, face.UV);
                     var textureIndex = face.Texture.GetComponent<TextureAuthoring>().Index;
-                    Debug.Log(textureIndex);
                     AddColors(f, (byte) textureIndex, ref colors);// Can we get this value at bake time.?
                     f++;
                 }

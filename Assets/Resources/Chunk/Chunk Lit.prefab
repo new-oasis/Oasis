@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5785797832745066305}
   - component: {fileID: 8913019268563234883}
   m_Layer: 0
-  m_Name: Chunk
+  m_Name: Chunk Lit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,6 +107,8 @@ MonoBehaviour:
     x: 0
     y: 0
     z: 0
+  modelPrefab: {fileID: 4368257331202869078, guid: 0dd514f7ceaa74ce48934e0e3712c664,
+    type: 3}
 --- !u!64 &8913019268563234883
 MeshCollider:
   m_ObjectHideFlags: 0

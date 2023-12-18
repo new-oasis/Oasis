@@ -17,13 +17,14 @@
     border-right-color: rgb(108, 108, 108);
     border-top-color: rgb(108, 108, 108);
     border-bottom-color: rgb(108, 108, 108);
+    background-color: rgba(0, 0, 0, 0.25);
 }
 
 .crosshair {
     position: absolute;
     left: 50%;
     top: 50%;
-    background-image: url('project://database/Assets/UI/Hud/crosshair.png?fileID=2800000&guid=cbddab88e8f6e664aa57bdc8d2bebe24&type=3#crosshair');
+    background-image: url('project://database/Assets/Scripts/Oasis/Game/Player/FirstPerson/Hud/crosshair.png?fileID=2800000&guid=cbddab88e8f6e664aa57bdc8d2bebe24&type=3#crosshair');
     width: 45px;
     height: 45px;
     justify-content: center;

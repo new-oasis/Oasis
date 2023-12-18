@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using Oasis.ECS.BlockStates;
 using Oasis.ECS.Common;
 using Oasis.ECS.World;
@@ -7,6 +8,7 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace Oasis.Game.Chunk
 {
@@ -61,6 +63,7 @@ namespace Oasis.Game.Chunk
             var blockStates = query.ToComponentDataArray<BlockState>(Allocator.Temp);
             
             // Remove any models that are no longer in the chunk
+            var indicesToRemove = new List<int3>();
             foreach (var modelXYZ in modelBlockStates.Keys)
             {
                 var voxelXYZ = modelXYZ + xyz * dims;
@@ -69,10 +72,14 @@ namespace Oasis.Game.Chunk
                 var blockState = blockStates[voxel];
                 
                 if (blockState.Type != BlockType.Model)
-                {
-                    modelBlockStates.Remove(modelXYZ);
-                    modelGameObjects.Remove(modelXYZ);
-                }
+                    indicesToRemove.Add(modelXYZ);
+            }
+            for (var i = indicesToRemove.Count - 1; i >= 0; i--)
+            {
+                var indexToRemove = indicesToRemove[i];
+                Destroy(modelGameObjects[indexToRemove]);
+                modelBlockStates.Remove(indexToRemove);
+                modelGameObjects.Remove(indexToRemove);
             }
 
             // Ensure all models that should be in the chunk are there
@@ -101,15 +108,15 @@ namespace Oasis.Game.Chunk
                     }
                     
                     // Add new model at xyz
-                    // var model = Instantiate(modelPrefab);
-                    // model.GetComponent<BlockStateMono>().BlockState = blockState;
+                    var model = Instantiate(modelPrefab);
+                    model.GetComponent<BlockStateMono>().BlockStateIndex = voxel;
                     // model.GetComponent<MeshFilter>().sharedMesh = blockState.Model.ComputeMesh();
                     // model.GetComponent<MeshCollider>().sharedMesh = blockState.Model.ComputeMesh();
                     // model.GetComponent<MeshRenderer>().materials = Textures.Instance.LitMaterials;
-                    // model.transform.parent = transform;
-                    // model.transform.localPosition = new Vector3(x, y, z);
-                    // modelGameObjects.Add(chunkVoxelXYZ, model);
-                    // modelBlockStates.Add(chunkVoxelXYZ, blockState);
+                    model.transform.parent = transform;
+                    model.transform.localPosition = new Vector3(x, y, z);
+                    modelGameObjects.Add(chunkVoxelXYZ, model);
+                    modelBlockStates.Add(chunkVoxelXYZ, blockState);
                 }
             }
         }

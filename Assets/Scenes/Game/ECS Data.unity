@@ -1508,6 +1508,7 @@ MonoBehaviour:
   blockStates:
   - {fileID: 1011032140}
   - {fileID: 407590224}
+  - {fileID: 1890095110}
 --- !u!114 &1339448441
 MonoBehaviour:
   m_ObjectHideFlags: 0
