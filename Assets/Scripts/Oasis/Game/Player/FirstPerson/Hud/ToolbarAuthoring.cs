@@ -14,9 +14,9 @@ public class ToolbarAuthoring : MonoBehaviour
         {
             AddComponent<ToolbarData>();
             
-            var toolbarBlockStates = AddBuffer<PaletteItem>();
+            var toolbarBlockStates = AddBuffer<BlockStateElement>();
             foreach (var blockState in authoring.blockStates)
-               toolbarBlockStates.Add(new PaletteItem{Value = GetEntity(blockState, TransformUsageFlags.None)});
+               toolbarBlockStates.Add(new BlockStateElement{Value = GetEntity(blockState, TransformUsageFlags.None)});
         }
     }
 }

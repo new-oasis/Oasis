@@ -10,21 +10,23 @@ namespace Oasis.ECS.Textures
     {
         public TextureType Type;
         public Texture2D Tex;
+        public int Index;
 
         public class TextureBaker : Baker<TextureAuthoring>
         {
             public override void Bake(TextureAuthoring authoring)
             {
-                // var index = (byte)TextureManager.Instance.LoadTexture(authoring.Tex, authoring.Type);
+                Debug.Log("Baking model " + authoring.name);
+                
                 if (TextureManager.Instance == null) return;
-                var index = TextureManager.Instance.LoadTexture(authoring.Tex, authoring.Type);
+                authoring.Index = TextureManager.Instance.LoadTexture(authoring.Tex, authoring.Type);
                 
                 var entity = GetEntity(TransformUsageFlags.None);
                 AddComponent(entity, new Texture
                 {
                     TextureName = authoring.gameObject.name,
                     Type = authoring.Type,
-                    Index = (byte)index,
+                    Index = (byte)authoring.Index,
                 });
 
             }

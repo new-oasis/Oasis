@@ -30,12 +30,12 @@ namespace Oasis.Game.Player.FirstPerson.Hud
             _instance = this;
             em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
             var worldEntity = em.CreateEntityQuery(typeof(Oasis.ECS.World.World)).GetSingletonEntity();
-            var worldBlockStates = em.GetBuffer<PaletteItem>(worldEntity);
+            var worldBlockStates = em.GetBuffer<BlockStateElement>(worldEntity);
         
             // Get ToolbarDataEntity
             ToolbarEntity = em.CreateEntityQuery(typeof(ToolbarData)).GetSingletonEntity();
             var Toolbar = em.CreateEntityQuery(typeof(ToolbarData)).GetSingleton<ToolbarData>();
-            var toolbarPaletteItems = em.GetBuffer<PaletteItem>(ToolbarEntity);
+            var toolbarPaletteItems = em.GetBuffer<BlockStateElement>(ToolbarEntity);
         
             root = gameObject.GetComponent<UIDocument>().rootVisualElement;
             toolbar = root.Q<VisualElement>("toolbar");
@@ -107,7 +107,7 @@ namespace Oasis.Game.Player.FirstPerson.Hud
         public BlockState GetActiveBlockState()
         {
             var toolbarData = em.CreateEntityQuery(typeof(ToolbarData)).GetSingleton<ToolbarData>();
-            var toolbarPaletteItems = em.GetBuffer<PaletteItem>(ToolbarEntity);
+            var toolbarPaletteItems = em.GetBuffer<BlockStateElement>(ToolbarEntity);
             var blockStateEntity = toolbarPaletteItems[toolbarData.selectedItem].Value;
             return em.GetComponentData<BlockState>(blockStateEntity);
         }   

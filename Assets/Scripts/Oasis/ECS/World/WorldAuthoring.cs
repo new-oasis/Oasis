@@ -28,10 +28,10 @@ namespace Oasis.ECS.World
                 });
 
                 // BlockStates
-                var blockStates = AddBuffer<PaletteItem>(entity);
+                var blockStates = AddBuffer<BlockStateElement>(entity);
                 foreach (var authoringBlockStateGo in authoring.blockStates)
                 {
-                    blockStates.Add(new PaletteItem {Value = GetEntity(authoringBlockStateGo)});
+                    blockStates.Add(new BlockStateElement {Value = GetEntity(authoringBlockStateGo)});
                 }
 
                 // Voxels
@@ -41,11 +41,10 @@ namespace Oasis.ECS.World
                 
                 // TODO Update below with working Comparer
                 var dirtEntity = GetEntity(authoring.dirtBlockState, TransformUsageFlags.None);
-                var dirtIndex = (byte)blockStates.AsNativeArray().IndexOf(new PaletteItem {Value = dirtEntity});
+                var dirtIndex = (byte)blockStates.AsNativeArray().IndexOf(new BlockStateElement {Value = dirtEntity});
                 
                 var grassEntity = GetEntity(authoring.grassBlockState, TransformUsageFlags.None);
-                var grassIndex = (byte)blockStates.AsNativeArray().IndexOf(new PaletteItem {Value = grassEntity});
-                Debug.Log("Grass index " + grassIndex);
+                var grassIndex = (byte)blockStates.AsNativeArray().IndexOf(new BlockStateElement {Value = grassEntity});
 
                 for (var i = 0; i < voxels.Length; i++)
                 {

@@ -44,7 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8717addb77f423b920919affbc42160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ModelName: Grass block
   Type: 1
   TextureType: 1
   ModelElements:
@@ -64,39 +63,45 @@ MonoBehaviour:
         y: 0
         z: 16
         w: 16
-      Texture: {fileID: 0}
+      Texture: {fileID: 8213995721879582349, guid: 89c394d7784ea4cdfb1a764b5c8dab81,
+        type: 3}
     - Side: 1
       UV:
         x: 0
         y: 0
         z: 16
         w: 16
-      Texture: {fileID: 0}
+      Texture: {fileID: 8213995721879582349, guid: 7eabbf01494ae4026a04e81220157b0a,
+        type: 3}
     - Side: 2
       UV:
         x: 0
         y: 0
         z: 16
         w: 16
-      Texture: {fileID: 0}
+      Texture: {fileID: 8213995721879582349, guid: 89c394d7784ea4cdfb1a764b5c8dab81,
+        type: 3}
     - Side: 3
       UV:
         x: 0
         y: 0
         z: 16
         w: 16
-      Texture: {fileID: 0}
+      Texture: {fileID: 8213995721879582349, guid: 89c394d7784ea4cdfb1a764b5c8dab81,
+        type: 3}
     - Side: 4
       UV:
         x: 0
         y: 0
         z: 16
         w: 16
-      Texture: {fileID: 0}
+      Texture: {fileID: 8213995721879582349, guid: ff62b6f571512420287880233d2b9027,
+        type: 3}
     - Side: 5
       UV:
         x: 0
         y: 0
         z: 16
         w: 16
-      Texture: {fileID: 0}
+      Texture: {fileID: 8213995721879582349, guid: 89c394d7784ea4cdfb1a764b5c8dab81,
+        type: 3}

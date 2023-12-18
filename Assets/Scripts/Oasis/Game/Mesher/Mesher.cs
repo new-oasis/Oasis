@@ -38,8 +38,8 @@ namespace Oasis.Game.Mesher
             // World
             var em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
             var worldEntity = em.CreateEntityQuery(typeof(ECS.World.World)).GetSingletonEntity();
-            var paletteItems = em.GetBuffer<PaletteItem>(worldEntity);
-                    
+            var paletteItems = em.GetBuffer<BlockStateElement>(worldEntity);
+
             // Loop over chunk in world
             for (var x = 0; x < chunkDims.x; x++)
             for (var y = 0; y < chunkDims.y; y++)
@@ -55,19 +55,20 @@ namespace Oasis.Game.Mesher
                     var adjacentVoxelIndex = adjacentVoxelXyz.ToIndex(worldDims);
                     var adjacentIsWithinBounds = IsWithinBounds(adjacentVoxelXyz, worldDims);
                     var adjacentVoxel = (ushort) (adjacentIsWithinBounds ? voxels[adjacentVoxelIndex] : 0);
-                    
+
                     var blockState = em.GetComponentData<BlockState>(paletteItems[voxel].Value);
                     var otherBlockState = em.GetComponentData<BlockState>(paletteItems[adjacentVoxel].Value);
                     if (IsFaceVisible(blockState, otherBlockState))
                     {
+                        // Models computed separately because > 6 faces.
                         if (blockState.Type == BlockType.Model)
                             continue;
-                        
-                        // Get Model
+
+                        // Assumes full block modelEntity with 6 faces.
                         var model = em.GetComponentData<Model>(blockState.Model);
                         var modelElementEntities = em.GetBuffer<ModelElementEntity>(blockState.Model);
                         var modelFaces = em.GetBuffer<ModelFace>(modelElementEntities[0].Value);
-                        
+
                         // Loop through modelFaces to find the one with the correct side
                         ModelFace modelFace = default;
                         foreach (var mf in modelFaces)
@@ -76,6 +77,7 @@ namespace Oasis.Game.Mesher
                             modelFace = mf;
                             break;
                         }
+
                         if (modelFace.Equals(default(ModelFace)))
                             Debug.LogError("ModelFace not found for side " + (Side) side);
 
@@ -84,7 +86,7 @@ namespace Oasis.Game.Mesher
                         var i = new int3(x, y, z).ToIndex(chunkDims) * 6 + side;
                         faces[i] = new Face
                         {
-                            TextureIndex = (ushort) texture.Index,
+                            TextureIndex = texture.Index,
                             TextureType = blockState.TextureType,
                             // BlockLight   = adjacentIsWithinBounds ? blockLights[adjacentVoxelIndex] : blockLightDefault,
                             // SkyLight     = adjacentIsWithinBounds ? skyLights[adjacentVoxelIndex] : skyLightDefault,
@@ -227,7 +229,7 @@ namespace Oasis.Game.Mesher
             meshData.SetSubMesh(2, new SubMeshDescriptor(opaqueTriangles.Length + alphaClipTriangles.Length, transparentTriangles.Length));
 
             var mesh = new Mesh();
-            mesh.name = "ChunkMesh";
+            mesh.name = "Mesher McMeshface";
             Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
             mesh.RecalculateNormals();
             mesh.RecalculateBounds();

@@ -68,8 +68,8 @@ namespace Oasis.Game.World
             var blockStateIndex = blockStates.IndexOf(blockState);
         
             // Get paletteIndex
-            var palette = em.GetBuffer<PaletteItem>(worldEntity);
-            var paletteIndex = (byte)palette.AsNativeArray().IndexOf(new PaletteItem{Value = blockStateEntities[blockStateIndex]});
+            var palette = em.GetBuffer<BlockStateElement>(worldEntity);
+            var paletteIndex = (byte)palette.AsNativeArray().IndexOf(new BlockStateElement{Value = blockStateEntities[blockStateIndex]});
         
             // Update voxel
             var voxels = em.GetBuffer<Voxel>(worldEntity);

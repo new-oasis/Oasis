@@ -27,11 +27,11 @@ namespace Oasis.ECS.Blocks
                 });
                 
                 
-                var paletteItems = AddBuffer<PaletteItem>();
+                var blockStateElements = AddBuffer<BlockStateElement>();
                 foreach (var blockState in authoring.BlockStates)
                 {
-                    var paletteItem = new PaletteItem { Value = GetEntity(blockState) };
-                    paletteItems.Add(paletteItem);
+                    var blockStateElement = new BlockStateElement { Value = GetEntity(blockState) };
+                    blockStateElements.Add(blockStateElement);
                 }
             }
         }

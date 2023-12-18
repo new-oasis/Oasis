@@ -4,18 +4,18 @@ using Unity.Entities;
 namespace Oasis.ECS.BlockStates
 {
     
-    public struct PaletteItem : IBufferElementData, IEquatable<PaletteItem>
+    public struct BlockStateElement : IBufferElementData, IEquatable<BlockStateElement>
     {
         public Entity Value;
 
-        public bool Equals(PaletteItem other)
+        public bool Equals(BlockStateElement other)
         {
             return Value.Equals(other.Value);
         }
 
         public override bool Equals(object obj)
         {
-            return obj is PaletteItem other && Equals(other);
+            return obj is BlockStateElement other && Equals(other);
         }
 
         public override int GetHashCode()
