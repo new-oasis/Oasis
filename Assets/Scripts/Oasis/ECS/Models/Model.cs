@@ -20,6 +20,15 @@ namespace Oasis.ECS.Models
         public float3 From; // 3 Bytes
         public float3 To; // 3 Bytes
         public bool NoShadows; // 1 Byte
+        public ModelElementRotation Rotation;
+    }
+
+    [Serializable]
+    public struct ModelElementRotation
+    {
+        public float3 Origin;
+        public byte Axis;  // 0 == x, 1 == y, 2 == z
+        public float Angle;
     }
 
     public struct ModelFace : IBufferElementData

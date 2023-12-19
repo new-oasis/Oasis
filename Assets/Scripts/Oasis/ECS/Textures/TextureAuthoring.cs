@@ -16,8 +16,6 @@ namespace Oasis.ECS.Textures
         {
             public override void Bake(TextureAuthoring authoring)
             {
-                Debug.Log("Baking model " + authoring.name);
-                
                 if (TextureManager.Instance == null) return;
                 authoring.Index = TextureManager.Instance.LoadTexture(authoring.Tex, authoring.Type);
                 

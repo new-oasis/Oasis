@@ -10,8 +10,6 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Rendering;
 using static Unity.Mathematics.math;
-using UnityEngine.Serialization;
-using Texture = UnityEngine.Texture;
 
 namespace Oasis.ECS.Models
 {
@@ -27,10 +25,10 @@ namespace Oasis.ECS.Models
             {
                 Debug.Log("Baking model " + authoring.name);
                 var entity = GetEntity(TransformUsageFlags.None);
-                
+
                 var mesh = ComputeModelMesh(authoring);
-                AddSharedComponentManaged(entity, new ModelMesh{Value = mesh});
-                
+                AddSharedComponentManaged(entity, new ModelMesh {Value = mesh});
+
                 CreateComponentData(authoring, entity);
             }
 
@@ -52,7 +50,13 @@ namespace Oasis.ECS.Models
                     {
                         From = authoringModelElement.From,
                         To = authoringModelElement.To,
-                        NoShadows = authoringModelElement.NoShadows
+                        NoShadows = authoringModelElement.NoShadows,
+                        Rotation = new ModelElementRotation
+                        {
+                            Angle = authoringModelElement.Rotation.Angle,
+                            Axis = authoringModelElement.Rotation.Axis,
+                            Origin = authoringModelElement.Rotation.Origin
+                        }
                     });
                     modelElementEntities.Add(new ModelElementEntity {Value = modelElementEntity});
 
@@ -100,57 +104,105 @@ namespace Oasis.ECS.Models
                     tris = opaqueTriangles;
 
                 var f = 0;
+                var v1 = new float3();
+                var v2 = new float3();
+                var v3 = new float3();
+                var v4 = new float3();
                 foreach (var element in authoring.ModelElements)
                 foreach (var face in element.ModelFaces)
                 {
                     switch (face.Side)
                     {
                         case Side.East:
-                            verts[f * 4 + 0] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.From.y / 16f, element.From.z / 16f)};
-                            verts[f * 4 + 1] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.To.y / 16f, element.From.z / 16f)};
-                            verts[f * 4 + 2] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.To.y / 16f, element.To.z / 16f)};
-                            verts[f * 4 + 3] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.From.y / 16f, element.To.z / 16f)};
+                            v1 = new float3(element.To.x / 16f, element.From.y / 16f, element.From.z / 16f);
+                            v2 = new float3(element.To.x / 16f, element.To.y / 16f, element.From.z / 16f);
+                            v3 = new float3(element.To.x / 16f, element.To.y / 16f, element.To.z / 16f);
+                            v4 = new float3(element.To.x / 16f, element.From.y / 16f, element.To.z / 16f);
                             break;
                         case Side.Up:
-                            verts[f * 4 + 0] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.To.y / 16f, element.From.z / 16f)};
-                            verts[f * 4 + 1] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.To.y / 16f, element.To.z / 16f)};
-                            verts[f * 4 + 2] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.To.y / 16f, element.To.z / 16f)};
-                            verts[f * 4 + 3] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.To.y / 16f, element.From.z / 16f)};
+                            v1 = new float3(element.From.x / 16f, element.To.y / 16f, element.From.z / 16f);
+                            v2 = new float3(element.From.x / 16f, element.To.y / 16f, element.To.z / 16f);
+                            v3 = new float3(element.To.x / 16f, element.To.y / 16f, element.To.z / 16f);
+                            v4 = new float3(element.To.x / 16f, element.To.y / 16f, element.From.z / 16f);
                             break;
                         case Side.North:
-                            verts[f * 4 + 0] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.From.y / 16f, element.To.z / 16f)};
-                            verts[f * 4 + 1] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.To.y / 16f, element.To.z / 16f)};
-                            verts[f * 4 + 2] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.To.y / 16f, element.To.z / 16f)};
-                            verts[f * 4 + 3] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.From.y / 16f, element.To.z / 16f)};
+                            v1 = new float3(element.To.x / 16f, element.From.y / 16f, element.To.z / 16f);
+                            v2 = new float3(element.To.x / 16f, element.To.y / 16f, element.To.z / 16f);
+                            v3 = new float3(element.From.x / 16f, element.To.y / 16f, element.To.z / 16f);
+                            v4 = new float3(element.From.x / 16f, element.From.y / 16f, element.To.z / 16f);
                             break;
                         case Side.West:
-                            verts[f * 4 + 0] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.From.y / 16f, element.To.z / 16f)};
-                            verts[f * 4 + 1] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.To.y / 16f, element.To.z / 16f)};
-                            verts[f * 4 + 2] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.To.y / 16f, element.From.z / 16f)};
-                            verts[f * 4 + 3] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.From.y / 16f, element.From.z / 16f)};
+                            v1 = new float3(element.From.x / 16f, element.From.y / 16f, element.To.z / 16f);
+                            v2 = new float3(element.From.x / 16f, element.To.y / 16f, element.To.z / 16f);
+                            v3 = new float3(element.From.x / 16f, element.To.y / 16f, element.From.z / 16f);
+                            v4 = new float3(element.From.x / 16f, element.From.y / 16f, element.From.z / 16f);
                             break;
                         case Side.Down:
-                            verts[f * 4 + 0] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.From.y / 16f, element.From.z / 16f)};
-                            verts[f * 4 + 1] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.From.y / 16f, element.From.z / 16f)};
-                            verts[f * 4 + 2] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.From.y / 16f, element.To.z / 16f)};
-                            verts[f * 4 + 3] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.From.y / 16f, element.To.z / 16f)};
+                            v1 = new float3(element.From.x / 16f, element.From.y / 16f, element.From.z / 16f);
+                            v2 = new float3(element.To.x / 16f, element.From.y / 16f, element.From.z / 16f);
+                            v3 = new float3(element.To.x / 16f, element.From.y / 16f, element.To.z / 16f);
+                            v4 = new float3(element.From.x / 16f, element.From.y / 16f, element.To.z / 16f);
                             break;
                         case Side.South:
-                            verts[f * 4 + 0] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.From.y / 16f, element.From.z / 16f)};
-                            verts[f * 4 + 1] = new VertexStream0 {Position = new float3(element.From.x / 16f, element.To.y / 16f, element.From.z / 16f)};
-                            verts[f * 4 + 2] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.To.y / 16f, element.From.z / 16f)};
-                            verts[f * 4 + 3] = new VertexStream0 {Position = new float3(element.To.x / 16f, element.From.y / 16f, element.From.z / 16f)};
+                            v1 = new float3(element.From.x / 16f, element.From.y / 16f, element.From.z / 16f);
+                            v2 = new float3(element.From.x / 16f, element.To.y / 16f, element.From.z / 16f);
+                            v3 = new float3(element.To.x / 16f, element.To.y / 16f, element.From.z / 16f);
+                            v4 = new float3(element.To.x / 16f, element.From.y / 16f, element.From.z / 16f);
                             break;
                     }
 
+                    // Update vertices if element has rotation
+                    if (!element.Rotation.Equals(default(ModelElementRotation)))
+                    {
+                        float3x3 rotationMatrix;
+                        var angle = element.Rotation.Angle * Mathf.Deg2Rad;
+                        switch (element.Rotation.Axis)
+                        {
+                            case 0:
+                                rotationMatrix = math.float3x3(1f, 0f, 0f, 0f, math.cos(angle), math.sin(angle), 0f, -math.sin(angle), math.cos(angle));
+                                break;
+                            case 1:
+                                rotationMatrix = math.float3x3(math.cos(angle), 0f, -math.sin(angle), 0f, 1f, 0f, math.sin(angle), 0f, math.cos(angle));
+                                break;
+                            case 2:
+                                rotationMatrix = math.float3x3(math.cos(angle), math.sin(angle), 0f, -math.sin(angle), math.cos(angle), 0f, 0f, 0f, 1f);
+                                break;
+                            default:
+                                rotationMatrix = math.float3x3(math.cos(angle), 0f, -math.sin(angle), 0f, 1f, 0f, math.sin(angle), 0f, math.cos(angle));
+                                break;
+                        }
 
+                        v1 -= element.Rotation.Origin;
+                        v1 = math.mul(rotationMatrix, v1);
+                        v1 += element.Rotation.Origin;
+                        
+                        v2 -= element.Rotation.Origin;
+                        v2 = math.mul(rotationMatrix, v2);
+                        v2 += element.Rotation.Origin;
+                        
+                        v3 -= element.Rotation.Origin;
+                        v3 = math.mul(rotationMatrix, v3);
+                        v3 += element.Rotation.Origin;
+                        
+                        v4 -= element.Rotation.Origin;
+                        v4 = math.mul(rotationMatrix, v4);
+                        v4 += element.Rotation.Origin;
+                        
+                    }
+                        
+                    verts[f * 4 + 0] = new VertexStream0 {Position = v1};
+                    verts[f * 4 + 1] = new VertexStream0 {Position = v2};
+                    verts[f * 4 + 2] = new VertexStream0 {Position = v3};
+                    verts[f * 4 + 3] = new VertexStream0 {Position = v4};
+
+                    
                     AddTris(tris, f);
                     AddTexCoord0(texCoord0, f, face.UV);
                     var textureIndex = face.Texture.GetComponent<TextureAuthoring>().Index;
-                    AddColors(f, (byte) textureIndex, ref colors);// Can we get this value at bake time.?
+                    AddColors(f, (byte) textureIndex, ref colors); // Can we get this value at bake time.?
                     f++;
                 }
-                
+
 
                 // Concat triangles
                 for (var i = 0; i < opaqueTriangles.Length; i++)
@@ -202,7 +254,6 @@ namespace Oasis.ECS.Models
                 tris.Add((ushort) (i * 4 + 3));
                 tris.Add((ushort) (i * 4 + 0));
             }
-
         }
 
         [Serializable]
@@ -211,6 +262,7 @@ namespace Oasis.ECS.Models
             public float3 From; // 3 Bytes
             public float3 To; // 3 Bytes
             public bool NoShadows; // 1 Byte
+            public ModelElementRotation Rotation;
             public List<ModelFaceAuthoring> ModelFaces; // ~8 Bytes
         }
 
