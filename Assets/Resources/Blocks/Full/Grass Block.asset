@@ -9,8 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ad5c7551723b4d8491c463bb0d68d2d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 32a77bffe407a4c46ad7974e80f80a17, type: 3}
   m_Name: Grass Block
   m_EditorClassIdentifier: 
-  Type: 1
+  BlockType: 1
   TextureType: 1
+  Variants:
+  - States: []
+    Model: {fileID: 11400000, guid: 6611b3acd5a4e4f329b768ed7187d054, type: 2}
