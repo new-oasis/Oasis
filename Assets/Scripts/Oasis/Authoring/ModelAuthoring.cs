@@ -49,6 +49,7 @@ namespace Oasis.Authoring
                 {
                     var authoringModelElement = authoring.Model.ModelElements[i];
                     var modelElementEntity = CreateAdditionalEntity(TransformUsageFlags.None, false, $"{authoring.name}/{i}");
+                    AppendToBuffer(entity, new ModelElementReference {Value = modelElementEntity});
                     AddComponent(modelElementEntity, new ModelElement
                     {
                         From = authoringModelElement.From,
@@ -61,24 +62,13 @@ namespace Oasis.Authoring
                             Origin = authoringModelElement.Rotation.Origin
                         }
                     });
-                    modelElementEntities.Add(new ModelElementReference {Value = modelElementEntity});
                     
                     // Add ModelFaces to ModelElement
-                    var textureAuthoringComponents = FindObjectsOfType<TextureAuthoring>();
-                    
-                    var modelFaceEntities = AddBuffer<ModelFace>(modelElementEntity);
+                    AddBuffer<ModelFace>(modelElementEntity);
                     foreach (var modelFace in authoringModelElement.ModelFaces)
                     {
-                    
-                        var textureAuthoringComponent = textureAuthoringComponents
-                            .FirstOrDefault(component => component.Texture == modelFace.Texture);
-                        if (textureAuthoringComponent == null)
-                        {
-                            Debug.LogError("No texture authoring component found for model face texture ");
-                            return;
-                        }    
-                    
-                        modelFaceEntities.Add(new ModelFace
+                        var textureAuthoringComponent = GetTextureAuthoringComponent(modelFace);
+                        AppendToBuffer(modelElementEntity, new ModelFace
                         {
                             Side = modelFace.Side,
                             UV = modelFace.UV,
@@ -86,6 +76,20 @@ namespace Oasis.Authoring
                         });
                     }
                 }
+            }
+
+            private static TextureAuthoring GetTextureAuthoringComponent(Assets.ModelFace modelFace)
+            {
+                var textureAuthoringComponents = FindObjectsOfType<TextureAuthoring>();
+                var textureAuthoringComponent = textureAuthoringComponents
+                    .FirstOrDefault(component => component.Texture == modelFace.Texture);
+                if (textureAuthoringComponent == null)
+                {
+                    Debug.LogError("No texture authoring component found for model face texture ");
+                    return textureAuthoringComponent;
+                }
+
+                return textureAuthoringComponent;
             }
 
             private Mesh ComputeModelMesh(ModelAuthoring authoring)

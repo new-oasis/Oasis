@@ -45,22 +45,27 @@ namespace Oasis.Authoring
                 AddBuffer<TextureArrayElement>(entity);
                 authoring.Textures.Clear();
                 var textureAuthoringComponents = FindObjectsOfType<TextureAuthoring>();
-                for (var i = 0; i < textureAuthoringComponents.Length; i++)
+                var index = 0;
+                foreach (var textureAuthoringComponent in textureAuthoringComponents)
                 {
+                    if (textureAuthoringComponent.Texture.Type != authoring.TextureType)
+                        continue;
+                    
                     // Update authoring
-                    textureAuthoringComponents[i].Index = i; // Set index in TextureAuthoring
-                    textureAuthoringComponents[i].Texture.Index = i; // Set index in Texture Asset
-                    authoring.Textures.Add(textureAuthoringComponents[i].Texture);
+                    textureAuthoringComponent.Index = index; // Set index in TextureAuthoring
+                    textureAuthoringComponent.Texture.Index = index; // Set index in Texture Asset
+                    authoring.Textures.Add(textureAuthoringComponent.Texture);
                     
                     // Copy texture into array
-                    Graphics.CopyTexture(textureAuthoringComponents[i].Texture.Texture2D, 0, 0, authoring.Array, i, 0);
+                    Graphics.CopyTexture(textureAuthoringComponent.Texture.Texture2D, 0, 0, authoring.Array, index, 0);
                     
                     // TextureArrayElement
                     var textureArrayElement = new TextureArrayElement
                     {
-                        Texture = GetEntity(textureAuthoringComponents[i].gameObject, TransformUsageFlags.None)
+                        Texture = GetEntity(textureAuthoringComponent.gameObject, TransformUsageFlags.None)
                     };
                     AppendToBuffer(entity, textureArrayElement);
+                    index++;
                 }
                 
                 

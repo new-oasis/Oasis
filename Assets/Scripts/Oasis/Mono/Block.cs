@@ -16,7 +16,7 @@ namespace Oasis.Mono
             // Block Index
             var em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
             var blockQuery = em.CreateEntityQuery(typeof(Block));
-            var blocks = blockQuery.ToComponentDataArray<Block>(Unity.Collections.Allocator.TempJob);
+            var blocks = blockQuery.ToComponentDataArray<Block>(Allocator.TempJob);
             var blockIndex = blocks.IndexOf(new Block {BlockName = Block.name, BlockType = Block.BlockType, TextureType = Block.TextureType});
             
             // Block Entity

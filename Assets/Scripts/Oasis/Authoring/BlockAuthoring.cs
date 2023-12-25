@@ -24,7 +24,6 @@ namespace Oasis.Authoring
                 
                 // VARIANTS
                 var variants = AddBuffer<Variant>();
-                var modelAuthoringComponents = FindObjectsOfType<ModelAuthoring>();
                 foreach (var blockVariant in authoring.Block.Variants)
                 {
                     var variant = new Variant
@@ -32,22 +31,10 @@ namespace Oasis.Authoring
                         States = new FixedList512Bytes<State>(),
                     };
                     foreach (var state in blockVariant.States)
-                    {
-                        variant.States.Add(new State
-                        {
-                            Key = state.Key,
-                            Value = state.Value,
-                        });
-                    }
+                        variant.States.Add(new State { Key = state.Key, Value = state.Value, });
                     
-                    var modelAuthoringComponent = modelAuthoringComponents
-                        .FirstOrDefault(component => component.Model == blockVariant.Model);
-                    if (modelAuthoringComponent == null)
-                    {
-                        Debug.LogError("No model authoring component found for variant in block " + authoring.name);
-                        return;
-                    }
-
+                    // Model
+                    var modelAuthoringComponent = GetModelAuthoringComponent(authoring, blockVariant);
                     variant.Model = GetEntity(modelAuthoringComponent, TransformUsageFlags.None);
                     variants.Add(variant);
                 } 
@@ -62,6 +49,20 @@ namespace Oasis.Authoring
                     TextureType = authoring.Block.TextureType,
                 });
                 World.All[0].EntityManager.SetName(entity, authoring.Block.name);
+            }
+
+            private static ModelAuthoring GetModelAuthoringComponent(BlockAuthoring authoring, Assets.Variant blockVariant)
+            {
+                var modelAuthoringComponents = FindObjectsOfType<ModelAuthoring>();
+                var modelAuthoringComponent = modelAuthoringComponents
+                    .FirstOrDefault(component => component.Model == blockVariant.Model);
+                if (modelAuthoringComponent == null)
+                {
+                    Debug.LogError("No model authoring component found for variant in block " + authoring.name);
+                    return modelAuthoringComponent;
+                }
+
+                return modelAuthoringComponent;
             }
         }
     }
