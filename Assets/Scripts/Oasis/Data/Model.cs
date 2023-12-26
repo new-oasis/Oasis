@@ -23,6 +23,7 @@ namespace Oasis.Data
         public ModelElementRotation Rotation;
     }
 
+    [Serializable]
     public struct ModelElementRotation
     {
         public float3 Origin;

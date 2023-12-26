@@ -17,3 +17,5 @@ MonoBehaviour:
   Variants:
   - States: []
     Model: {fileID: 11400000, guid: 47f3af762e5bb4f40ab8b0f64e4c6a48, type: 2}
+  - States: []
+    Model: {fileID: 11400000, guid: 2bc09b46144b5436a94b7f88c6f00c7b, type: 2}
