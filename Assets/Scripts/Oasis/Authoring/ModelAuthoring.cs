@@ -175,7 +175,6 @@ namespace Oasis.Authoring
                     // Update vertices if element has rotation
                     if (!element.Rotation.Equals(default(ModelElementRotation)))
                     {
-                        Debug.Log("Got rotation " + element.Rotation);
                         float3x3 rotationMatrix;
                         var angle = element.Rotation.Angle * Mathf.Deg2Rad;
                         switch (element.Rotation.Axis)

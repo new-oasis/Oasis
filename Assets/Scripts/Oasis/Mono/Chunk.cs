@@ -5,6 +5,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using World = Oasis.Data.World;
 
 namespace Oasis.Mono
 {
@@ -18,18 +19,18 @@ namespace Oasis.Mono
         Entity worldEntity;
         private Data.World world;
         
-        public Dictionary<int3, Block> ModelBlocks;
+        public Dictionary<int3, WorldBlockVariant> Models;
         public Dictionary<int3, GameObject> ModelGameObjects;
         public GameObject ModelPrefab;
         
         private void Start()
         {
             em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
-            worldEntity = em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
-            world = em.GetComponentData<Data.World>(worldEntity);
+            worldEntity = em.CreateEntityQuery(typeof(World)).GetSingletonEntity();
+            world = em.GetComponentData<World>(worldEntity);
 
             ModelGameObjects = new Dictionary<int3,GameObject>();
-            ModelBlocks = new Dictionary<int3, Block>();
+            Models = new Dictionary<int3, WorldBlockVariant>();
             
             UpdateChunk();
         }
@@ -55,26 +56,25 @@ namespace Oasis.Mono
 
         private void UpdateModels(NativeArray<ushort> voxels)
         {
-            var query = em.CreateEntityQuery(typeof(Block));
-            var blocks = query.ToComponentDataArray<Block>(Allocator.Temp);
+            var worldBlockVariants = em.GetBuffer<WorldBlockVariant>(worldEntity);
             
             // Remove any models that are no longer in the chunk
             var indicesToRemove = new List<int3>();
-            foreach (var modelXYZ in ModelBlocks.Keys)
+            foreach (var modelXYZ in Models.Keys)
             {
                 var voxelXYZ = modelXYZ + XYZ * Dims;
                 var voxelIndex = voxelXYZ.ToIndex(world.Dims);
                 var voxel = voxels[voxelIndex];
-                var block = blocks[voxel];
+                var blockVariant = worldBlockVariants[voxel];
                 
-                if (block.BlockType != BlockType.Model)
+                if (em.GetComponentData<Block>(blockVariant.Block).BlockType != BlockType.Model)
                     indicesToRemove.Add(modelXYZ);
             }
             for (var i = indicesToRemove.Count - 1; i >= 0; i--)
             {
                 var indexToRemove = indicesToRemove[i];
                 Destroy(ModelGameObjects[indexToRemove]);
-                ModelBlocks.Remove(indexToRemove);
+                Models.Remove(indexToRemove);
                 ModelGameObjects.Remove(indexToRemove);
             }
 
@@ -88,32 +88,32 @@ namespace Oasis.Mono
                 var voxelIndex = voxelXyz.ToIndex(world.Dims);
                 var voxel = voxels[voxelIndex];
         
-                var block = blocks[voxel]; // TODO optimize by getting blockIds of models and avoid 16^3 block lookups
-                if (block.BlockType == BlockType.Model)
+                var blockVariant = worldBlockVariants[voxel]; // TODO optimize by getting blockIds of models and avoid 16^3 block lookups
+                if (em.GetComponentData<Block>(blockVariant.Block).BlockType == BlockType.Model)
                 {
                     // Continue if modelBlock already exists
-                    if (ModelBlocks.ContainsKey(chunkVoxelXYZ) && ModelBlocks[chunkVoxelXYZ].Equals(block))
+                    if (Models.ContainsKey(chunkVoxelXYZ) && Models[chunkVoxelXYZ].Equals(blockVariant))
                         continue;
                     
                     // Remove any existing model at xyz
-                    if (ModelBlocks.ContainsKey(chunkVoxelXYZ))
+                    if (Models.ContainsKey(chunkVoxelXYZ))
                     {
                         Destroy(ModelGameObjects[chunkVoxelXYZ]);
                         ModelGameObjects.Remove(chunkVoxelXYZ);
-                        ModelBlocks.Remove(chunkVoxelXYZ);
+                        Models.Remove(chunkVoxelXYZ);
                     }
                     
                     // Add new model at xyz
                     var model = Instantiate(ModelPrefab);
-                    // model.GetComponent<Block>().BlockIndex = voxel;
-                    
-                    // model.GetComponent<MeshFilter>().sharedMesh = block.Model.ComputeMesh();
-                    // model.GetComponent<MeshCollider>().sharedMesh = block.Model.ComputeMesh();
-                    // model.GetComponent<MeshRenderer>().materials = Textures.Instance.LitMaterials;
+                    var blockVariants = em.GetBuffer<Variant>(blockVariant.Block);
+                    var variant = blockVariants[blockVariant.VariantIndex];
+                    var modelMesh = em.GetSharedComponentManaged<ModelMesh>(variant.Model).Value;
+                    model.GetComponent<MeshFilter>().sharedMesh = modelMesh;
+                    model.GetComponent<MeshCollider>().sharedMesh = modelMesh;
                     model.transform.parent = transform;
                     model.transform.localPosition = new Vector3(x, y, z);
                     ModelGameObjects.Add(chunkVoxelXYZ, model);
-                    ModelBlocks.Add(chunkVoxelXYZ, block);
+                    Models.Add(chunkVoxelXYZ, blockVariant);
                 }
             }
         }

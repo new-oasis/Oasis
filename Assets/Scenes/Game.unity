@@ -514,7 +514,8 @@ MonoBehaviour:
     x: 16
     y: 16
     z: 16
-  ModelPrefab: {fileID: 0}
+  ModelPrefab: {fileID: 4368257331202869078, guid: fe55e5d2ad47e46128bfd059e199664a,
+    type: 3}
 --- !u!64 &384916022
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -673,7 +674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &695613758
 Transform:
   m_ObjectHideFlags: 0
