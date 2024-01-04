@@ -23,10 +23,10 @@ namespace Oasis.Authoring
                 }
                 
                 // VARIANTS
-                var variants = AddBuffer<Variant>();
+                var variants = AddBuffer<BlockState>();
                 foreach (var blockVariant in authoring.Block.Variants)
                 {
-                    var variant = new Variant
+                    var variant = new BlockState
                     {
                         States = new FixedList512Bytes<State>(),
                     };

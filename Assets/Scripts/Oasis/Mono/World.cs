@@ -1,112 +1,104 @@
-// using System;
-// using System.Collections.Generic;
-// using Oasis.Data;
-// using Unity.Collections;
-// using Unity.Entities;
-// using Unity.Mathematics;
-// using UnityEngine;
-//
-// namespace Oasis.Game.World
-// {
-//     public class World : MonoBehaviour
-//     {
-//     
-//         private static World _instance;
-//         public static World Instance { get { return _instance; } }
-//     
-//         public EntityManager em;
-//         public Entity worldEntity;
-//         public Data.World world;
-//     
-//         public Action<int, ushort> OnVoxelChanged;  // index, blockIndex
-//     
-//         [Header("Chunks")]
-//         public Transform chunksParent;
-//         public GameObject chunkPrefab;
-//         public int3 chunkDims;
-//         public Dictionary<int3, Chunk.Chunk> chunks = new Dictionary<int3, Chunk.Chunk>();
-//     
-//         private ushort AirIndex;
-//
-//         private void Awake()
-//         {
-//             _instance = this;
-//         }
-//
-//         private void Start()
-//         {
-//             em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
-//             worldEntity = em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
-//             world = em.GetComponentData<Data.World>(worldEntity);
-//             // var worldBlockStates = em.GetBuffer<PaletteItem>(worldEntity);
-//
-//             AirIndex = 0;
-//
-//             for(var x=0; x<world.Dims.x/chunkDims.x; x++)
-//             for (var z=0; z < world.Dims.z / chunkDims.z; z++)
-//             {
-//                 var chunkGO = Instantiate(chunkPrefab, chunksParent);
-//                 chunkGO.transform.position = new Vector3(x*chunkDims.x, 0f, z*chunkDims.z);
-//                 var chunk = chunkGO.GetComponent<Chunk.Chunk>();
-//                 chunk.xyz = new int3(x, 0, z);
-//                 chunk.dims = chunkDims;
-//                 chunks[chunk.xyz] = chunk;
-//                 chunkGO.name = chunk.xyz.ToString();
-//             }
-//         }
-//
-//  
-//         public void Place(int3 voxel, BlockState blockState)
-//         {
-//             Debug.Log($"Got voxel {voxel} and blockState {blockState}");
-//             var voxelIndex = voxel.ToIndex(world.Dims);
-//
-//             var query = em.CreateEntityQuery(typeof(BlockState));
-//             var blockStates = query.ToComponentDataArray<BlockState>(Allocator.Temp);
-//             var blockStateEntities = query.ToEntityArray(Allocator.Temp);
-//             var blockStateIndex = blockStates.IndexOf(blockState);
-//         
-//             // Get paletteIndex
-//             var palette = em.GetBuffer<BlockStateElement>(worldEntity);
-//             var paletteIndex = (byte)palette.AsNativeArray().IndexOf(new BlockStateElement{Value = blockStateEntities[blockStateIndex]});
-//         
-//             // Update voxel
-//             var voxels = em.GetBuffer<Voxel>(worldEntity);
-//             voxels[voxelIndex] = new Voxel {Value = paletteIndex};
-//         
-//             UpdateChunkMeshes(voxelIndex);
-//             OnVoxelChanged?.Invoke(voxelIndex, (ushort)blockStateIndex);
-//         }
-//
-//         public void Remove(int3 voxel)
-//         {
-//             Debug.Log($"Remove voxel {voxel}");
-//             var voxelIndex = voxel.ToIndex(world.Dims);
-//             var voxels = em.GetBuffer<Voxel>(worldEntity);
-//             voxels[voxelIndex] = new Voxel {Value = AirIndex};
-//             UpdateChunkMeshes(voxelIndex);
-//             OnVoxelChanged?.Invoke(voxelIndex, AirIndex);
-//         }
-//     
-//         private void UpdateChunkMeshes(int voxelIndex)
-//         {
-//             var voxelXyz = voxelIndex.ToInt3(world.Dims);
-//             var chunkXyz = voxelXyz / chunkDims;
-//             chunks[chunkXyz].UpdateChunk();
-//             
-//             if (voxelXyz.x % chunkDims.x == 0 && chunks.ContainsKey(chunkXyz - new int3(1, 0, 0)))
-//                 chunks[chunkXyz - new int3(1, 0, 0)].UpdateChunk();
-//             else if (voxelXyz.x % chunkDims.x == chunkDims.x - 1 && chunks.ContainsKey(chunkXyz + new int3(1, 0, 0)))
-//                 chunks[chunkXyz + new int3(1, 0, 0)].UpdateChunk();
-//             else if (voxelXyz.y % chunkDims.y == 0 && chunks.ContainsKey(chunkXyz - new int3(0, 1, 0)))
-//                 chunks[chunkXyz - new int3(0, 1, 0)].UpdateChunk();
-//             else if (voxelXyz.y % chunkDims.y == chunkDims.y - 1 && chunks.ContainsKey(chunkXyz + new int3(0, 1, 0)))
-//                 chunks[chunkXyz + new int3(0, 1, 0)].UpdateChunk();
-//             else if (voxelXyz.z % chunkDims.z == 0 && chunks.ContainsKey(chunkXyz - new int3(0, 0, 1)))
-//                 chunks[chunkXyz - new int3(0, 0, 1)].UpdateChunk();
-//             else if (voxelXyz.z % chunkDims.z == chunkDims.z - 1 && chunks.ContainsKey(chunkXyz + new int3(0, 0, 1)))
-//                 chunks[chunkXyz + new int3(0, 0, 1)].UpdateChunk();
-//         }
-//     
-//     }
-// }
+using System;
+using System.Collections.Generic;
+using Oasis.Data;
+using Unity.Collections;
+using Unity.Entities;
+using Unity.Mathematics;
+using UnityEngine;
+
+namespace Oasis.Mono
+{
+    public class World : MonoBehaviour
+    {
+        private static World _instance;
+        public static World Instance { get { return _instance; } }
+
+        public Action<int, ushort> OnVoxelChanged;  // index, blockIndex
+    
+        [Header("Chunks")]
+        public Transform ChunksParent;
+        public GameObject ChunkPrefab;
+        public int3 ChunkDims;
+        private readonly Dictionary<int3, Chunk> _chunks = new();
+    
+        
+        private EntityManager _em;
+        private Entity _worldEntity;
+        private Data.World _worldData;
+        private ushort _airIndex;
+
+        private void Awake()
+        {
+            _instance = this;
+        }
+
+        private void Start()
+        {
+            _em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
+            _worldEntity = _em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
+            _worldData = _em.GetComponentData<Data.World>(_worldEntity);
+
+            _airIndex = 0;
+
+            for(var x=0; x<_worldData.Dims.x/ChunkDims.x; x++)
+            for (var z=0; z < _worldData.Dims.z / ChunkDims.z; z++)
+            {
+                var chunkGameObject = Instantiate(ChunkPrefab, ChunksParent);
+                chunkGameObject.transform.position = new Vector3(x*ChunkDims.x, 0f, z*ChunkDims.z);
+                var chunk = chunkGameObject.GetComponent<Chunk>();
+                chunk.XYZ = new int3(x, 0, z);
+                chunk.Dims = ChunkDims;
+                _chunks[chunk.XYZ] = chunk;
+                chunkGameObject.name = chunk.XYZ.ToString();
+            }
+        }
+
+        public void Place(int3 voxel, WorldBlockState worldBlockState)
+        {
+            Debug.Log($"Got voxel {voxel} and worldBlockState {worldBlockState}");
+            var voxelIndex = voxel.ToIndex(_worldData.Dims);
+
+            // Get worldBlockStateIndex
+            var worldBlockStates = _em.GetBuffer<WorldBlockState>(_worldEntity);
+            var worldBlockStateIndex = (ushort)worldBlockStates.AsNativeArray().IndexOf(worldBlockState);
+            
+            // Update voxel
+            var voxels = _em.GetBuffer<Voxel>(_worldEntity);
+            voxels[voxelIndex] = new Voxel {Value = worldBlockStateIndex};
+        
+            UpdateChunkMeshes(voxelIndex);
+            OnVoxelChanged?.Invoke(voxelIndex, (ushort)worldBlockStateIndex);
+        }
+
+        public void Remove(int3 voxel)
+        {
+            Debug.Log($"Remove voxel {voxel}");
+            var voxelIndex = voxel.ToIndex(_worldData.Dims);
+            var voxels = _em.GetBuffer<Voxel>(_worldEntity);
+            voxels[voxelIndex] = new Voxel {Value = _airIndex};
+            UpdateChunkMeshes(voxelIndex);
+            OnVoxelChanged?.Invoke(voxelIndex, _airIndex);
+        }
+    
+        private void UpdateChunkMeshes(int voxelIndex)
+        {
+            var voxelXyz = voxelIndex.ToInt3(_worldData.Dims);
+            var chunkXyz = voxelXyz / ChunkDims;
+            _chunks[chunkXyz].UpdateChunk();
+            
+            if (voxelXyz.x % ChunkDims.x == 0 && _chunks.ContainsKey(chunkXyz - new int3(1, 0, 0)))
+                _chunks[chunkXyz - new int3(1, 0, 0)].UpdateChunk();
+            else if (voxelXyz.x % ChunkDims.x == ChunkDims.x - 1 && _chunks.ContainsKey(chunkXyz + new int3(1, 0, 0)))
+                _chunks[chunkXyz + new int3(1, 0, 0)].UpdateChunk();
+            else if (voxelXyz.y % ChunkDims.y == 0 && _chunks.ContainsKey(chunkXyz - new int3(0, 1, 0)))
+                _chunks[chunkXyz - new int3(0, 1, 0)].UpdateChunk();
+            else if (voxelXyz.y % ChunkDims.y == ChunkDims.y - 1 && _chunks.ContainsKey(chunkXyz + new int3(0, 1, 0)))
+                _chunks[chunkXyz + new int3(0, 1, 0)].UpdateChunk();
+            else if (voxelXyz.z % ChunkDims.z == 0 && _chunks.ContainsKey(chunkXyz - new int3(0, 0, 1)))
+                _chunks[chunkXyz - new int3(0, 0, 1)].UpdateChunk();
+            else if (voxelXyz.z % ChunkDims.z == ChunkDims.z - 1 && _chunks.ContainsKey(chunkXyz + new int3(0, 0, 1)))
+                _chunks[chunkXyz + new int3(0, 0, 1)].UpdateChunk();
+        }
+    
+    }
+}

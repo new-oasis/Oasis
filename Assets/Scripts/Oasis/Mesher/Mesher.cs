@@ -8,6 +8,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using Texture = UnityEngine.Texture;
 using static Unity.Mathematics.math;
+using BlockState = Oasis.Data.BlockState;
 
 namespace Oasis.Mesher
 {
@@ -37,7 +38,7 @@ namespace Oasis.Mesher
             // World
             var em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
             var worldEntity = em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
-            var worldBlockVariants = em.GetBuffer<WorldBlockVariant>(worldEntity);
+            var worldBlockVariants = em.GetBuffer<WorldBlockState>(worldEntity);
 
             // Loop over chunk in world
             for (var x = 0; x < chunkDims.x; x++)
@@ -65,7 +66,7 @@ namespace Oasis.Mesher
 
                         // Assumes full block modelEntity with 6 faces.
                         // Get blockVariant for this voxel
-                        var variants = em.GetBuffer<Variant>( worldBlockVariants[voxel].Block );
+                        var variants = em.GetBuffer<BlockState>( worldBlockVariants[voxel].Block );
                         var variant = variants[worldBlockVariants[voxel].VariantIndex];
                         var model = em.GetComponentData<Model>(variant.Model);
                         var modelElementEntities = em.GetBuffer<ModelElementReference>(variant.Model);

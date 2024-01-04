@@ -24,7 +24,7 @@ namespace Oasis.Mono
             var blockEntity = blockEntities[blockIndex];
 
             // Block Variant
-            var blockStateVariants = em.GetBuffer<Variant>(blockEntity);
+            var blockStateVariants = em.GetBuffer<Data.BlockState>(blockEntity);
             var variant = blockStateVariants[VariantIndex];
             
             // Variant Model Mesh

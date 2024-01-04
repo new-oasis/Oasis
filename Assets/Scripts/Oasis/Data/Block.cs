@@ -27,7 +27,7 @@ namespace Oasis.Data
         }
     }
     
-    public struct Variant : IBufferElementData
+    public struct BlockState : IBufferElementData
     {
         public FixedList512Bytes<State> States;
         public Entity Model;

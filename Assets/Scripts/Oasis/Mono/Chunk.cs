@@ -19,18 +19,18 @@ namespace Oasis.Mono
         Entity worldEntity;
         private Data.World world;
         
-        public Dictionary<int3, WorldBlockVariant> Models;
+        public Dictionary<int3, WorldBlockState> Models;
         public Dictionary<int3, GameObject> ModelGameObjects;
         public GameObject ModelPrefab;
         
         private void Start()
         {
             em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
-            worldEntity = em.CreateEntityQuery(typeof(World)).GetSingletonEntity();
-            world = em.GetComponentData<World>(worldEntity);
+            worldEntity = em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
+            world = em.GetComponentData<Data.World>(worldEntity);
 
             ModelGameObjects = new Dictionary<int3,GameObject>();
-            Models = new Dictionary<int3, WorldBlockVariant>();
+            Models = new Dictionary<int3, WorldBlockState>();
             
             UpdateChunk();
         }
@@ -56,7 +56,7 @@ namespace Oasis.Mono
 
         private void UpdateModels(NativeArray<ushort> voxels)
         {
-            var worldBlockVariants = em.GetBuffer<WorldBlockVariant>(worldEntity);
+            var worldBlockVariants = em.GetBuffer<WorldBlockState>(worldEntity);
             
             // Remove any models that are no longer in the chunk
             var indicesToRemove = new List<int3>();
@@ -105,7 +105,7 @@ namespace Oasis.Mono
                     
                     // Add new model at xyz
                     var model = Instantiate(ModelPrefab);
-                    var blockVariants = em.GetBuffer<Variant>(blockVariant.Block);
+                    var blockVariants = em.GetBuffer<Data.BlockState>(blockVariant.Block);
                     var variant = blockVariants[blockVariant.VariantIndex];
                     var modelMesh = em.GetSharedComponentManaged<ModelMesh>(variant.Model).Value;
                     model.GetComponent<MeshFilter>().sharedMesh = modelMesh;
