@@ -30,7 +30,7 @@
 //             _instance = this;
 //             em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
 //             var worldEntity = em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
-//             var worldBlockStates = em.GetBuffer<BlockStateElement>(worldEntity);
+//             var bockStates = em.GetBuffer<BlockState>(worldEntity);
 //         
 //             // Get ToolbarDataEntity
 //             ToolbarEntity = em.CreateEntityQuery(typeof(ToolbarData)).GetSingletonEntity();
@@ -49,7 +49,7 @@
 //             int slotIndex = 0;
 //             foreach (var toolbarBlockState in toolbarBlockStates)
 //             {
-//                 var toolbarBlockStateIndex = (byte)worldBlockStates.AsNativeArray().IndexOf(toolbarBlockState);
+//                 var toolbarBlockStateIndex = (byte)BlockStates.AsNativeArray().IndexOf(toolbarBlockState);
 //                 voxels[0] = toolbarBlockStateIndex;
 //             
 //                 // Get blockState model mesh

@@ -14,8 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlockType: 2
   TextureType: 3
-  Variants:
+  BlockStates:
   - States: []
     Model: {fileID: 11400000, guid: 47f3af762e5bb4f40ab8b0f64e4c6a48, type: 2}
-  - States: []
+    Rotation:
+      Axis: 0
+      Angle: 0
+  - States:
+    - Key: facing
+      Value: east
     Model: {fileID: 11400000, guid: 2bc09b46144b5436a94b7f88c6f00c7b, type: 2}
+    Rotation:
+      Axis: 2
+      Angle: 0

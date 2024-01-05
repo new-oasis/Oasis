@@ -27,10 +27,27 @@ namespace Oasis.Data
         }
     }
     
-    public struct BlockState : IBufferElementData
+    public struct BlockState : IBufferElementData, IEquatable<BlockState>
     {
+        public Entity Block;
         public FixedList512Bytes<State> States;
         public Entity Model;
+        public BlockStateRotation Rotation;
+
+        public bool Equals(BlockState other)
+        {
+            return Block.Equals(other.Block) && States.Equals(other.States) && Model.Equals(other.Model);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is BlockState other && Equals(other);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Block, States, Model);
+        }
     }
     
     [Serializable]
@@ -40,4 +57,10 @@ namespace Oasis.Data
         public FixedString32Bytes Value;
     }
     
+    [Serializable]
+    public struct BlockStateRotation
+    {
+        public byte Axis;  // 0 == x, 1 == y, 2 == z
+        public float Angle;
+    }
 }

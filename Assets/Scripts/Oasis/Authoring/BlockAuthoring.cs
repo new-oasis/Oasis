@@ -3,7 +3,6 @@ using System.Linq;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
-using State = Oasis.Data.State;
 using World = Unity.Entities.World;
 
 namespace Oasis.Authoring
@@ -22,26 +21,28 @@ namespace Oasis.Authoring
                     return;
                 }
                 
-                // VARIANTS
-                var variants = AddBuffer<BlockState>();
-                foreach (var blockVariant in authoring.Block.Variants)
+                var entity = GetEntity(authoring, TransformUsageFlags.None);
+                
+                // BLOCK STATES
+                var blockStates = AddBuffer<Data.BlockState>(entity);
+                foreach (var authoringBlockState in authoring.Block.BlockStates)
                 {
-                    var variant = new BlockState
+                    var blockState = new BlockState
                     {
                         States = new FixedList512Bytes<State>(),
+                        Block = entity,
                     };
-                    foreach (var state in blockVariant.States)
-                        variant.States.Add(new State { Key = state.Key, Value = state.Value, });
+                    foreach (var state in authoringBlockState.States)
+                        blockState.States.Add(new State { Key = state.Key, Value = state.Value, });
                     
                     // Model
-                    var modelAuthoringComponent = GetModelAuthoringComponent(authoring, blockVariant);
-                    variant.Model = GetEntity(modelAuthoringComponent, TransformUsageFlags.None);
-                    variants.Add(variant);
+                    var modelAuthoringComponent = GetModelAuthoringComponent(authoring, authoringBlockState);
+                    blockState.Model = GetEntity(modelAuthoringComponent, TransformUsageFlags.None);
+                    blockStates.Add(blockState);
                 } 
                 
                 
                 // Apply to entity
-                var entity = GetEntity(authoring);
                 AddComponent(entity, new Block
                 {
                     BlockName = authoring.name,
@@ -51,11 +52,11 @@ namespace Oasis.Authoring
                 World.All[0].EntityManager.SetName(entity, authoring.Block.name);
             }
 
-            private static ModelAuthoring GetModelAuthoringComponent(BlockAuthoring authoring, Assets.Variant blockVariant)
+            private static ModelAuthoring GetModelAuthoringComponent(BlockAuthoring authoring, Assets.BlockState blockState)
             {
                 var modelAuthoringComponents = FindObjectsOfType<ModelAuthoring>();
                 var modelAuthoringComponent = modelAuthoringComponents
-                    .FirstOrDefault(component => component.Model == blockVariant.Model);
+                    .FirstOrDefault(component => component.Model == blockState.Model);
                 if (modelAuthoringComponent == null)
                 {
                     Debug.LogError("No model authoring component found for variant in block " + authoring.name);

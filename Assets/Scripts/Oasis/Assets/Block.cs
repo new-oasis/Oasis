@@ -1,8 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Oasis.Common;
-using Oasis.Data;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Oasis.Assets
 {
@@ -11,13 +10,28 @@ namespace Oasis.Assets
     {
         public BlockType BlockType;
         public TextureType TextureType;
-        public List<Variant> Variants = new List<Variant>();
+        public List<BlockState> BlockStates = new();
     }
     
-    [System.Serializable]
-    public struct Variant
+    [Serializable]
+    public struct BlockState
     {
         public List<State> States;
         public Model Model;
+        public BlockStateRotation Rotation;
+    }
+
+    [Serializable]
+    public struct State
+    {
+        public string Key;
+        public string Value;
+    }
+    
+    [Serializable]
+    public struct BlockStateRotation
+    {
+        public byte Axis;  // 0 == x, 1 == y, 2 == z
+        public float Angle;
     }
 }

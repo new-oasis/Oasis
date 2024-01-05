@@ -831,6 +831,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3b223103d69e54a801b3135d7244ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectedItem: 0
+  blockStates: []
 --- !u!114 &1339448441
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1183,13 +1185,13 @@ MonoBehaviour:
     x: 48
     y: 16
     z: 48
-  BlockVariants:
+  BlockStates:
   - Block: {fileID: 11400000, guid: 760c5d0585eeb414b8dd68f666428a87, type: 2}
-    VariantIndex: 0
+    BlockStatesIndex: 0
   - Block: {fileID: 11400000, guid: 79779082f142245d7a658efe90579fb2, type: 2}
-    VariantIndex: 0
+    BlockStatesIndex: 0
   - Block: {fileID: 11400000, guid: ee21fc002ca46484c8d574ab3bcc37dc, type: 2}
-    VariantIndex: 0
+    BlockStatesIndex: 0
   Dirt: 1
   Grass: 2
 --- !u!4 &1794047354

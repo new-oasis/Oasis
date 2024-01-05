@@ -19,7 +19,7 @@ namespace Oasis.Mono
         Entity worldEntity;
         private Data.World world;
         
-        public Dictionary<int3, WorldBlockState> Models;
+        public Dictionary<int3, BlockState> Models;
         public Dictionary<int3, GameObject> ModelGameObjects;
         public GameObject ModelPrefab;
         
@@ -30,7 +30,7 @@ namespace Oasis.Mono
             world = em.GetComponentData<Data.World>(worldEntity);
 
             ModelGameObjects = new Dictionary<int3,GameObject>();
-            Models = new Dictionary<int3, WorldBlockState>();
+            Models = new Dictionary<int3, BlockState>();
             
             UpdateChunk();
         }
@@ -56,7 +56,7 @@ namespace Oasis.Mono
 
         private void UpdateModels(NativeArray<ushort> voxels)
         {
-            var worldBlockVariants = em.GetBuffer<WorldBlockState>(worldEntity);
+            var worldBlockStates = em.GetBuffer<Data.WorldBlockState>(worldEntity);
             
             // Remove any models that are no longer in the chunk
             var indicesToRemove = new List<int3>();
@@ -65,9 +65,9 @@ namespace Oasis.Mono
                 var voxelXYZ = modelXYZ + XYZ * Dims;
                 var voxelIndex = voxelXYZ.ToIndex(world.Dims);
                 var voxel = voxels[voxelIndex];
-                var blockVariant = worldBlockVariants[voxel];
+                var worldBlockState = worldBlockStates[voxel];
                 
-                if (em.GetComponentData<Block>(blockVariant.Block).BlockType != BlockType.Model)
+                if (em.GetComponentData<Block>(worldBlockState.Block).BlockType != BlockType.Model)
                     indicesToRemove.Add(modelXYZ);
             }
             for (var i = indicesToRemove.Count - 1; i >= 0; i--)
@@ -88,7 +88,7 @@ namespace Oasis.Mono
                 var voxelIndex = voxelXyz.ToIndex(world.Dims);
                 var voxel = voxels[voxelIndex];
         
-                var blockVariant = worldBlockVariants[voxel]; // TODO optimize by getting blockIds of models and avoid 16^3 block lookups
+                var blockVariant = worldBlockStates[voxel]; // TODO optimize by getting blockIds of models and avoid 16^3 block lookups
                 if (em.GetComponentData<Block>(blockVariant.Block).BlockType == BlockType.Model)
                 {
                     // Continue if modelBlock already exists
@@ -105,15 +105,16 @@ namespace Oasis.Mono
                     
                     // Add new model at xyz
                     var model = Instantiate(ModelPrefab);
-                    var blockVariants = em.GetBuffer<Data.BlockState>(blockVariant.Block);
-                    var variant = blockVariants[blockVariant.VariantIndex];
-                    var modelMesh = em.GetSharedComponentManaged<ModelMesh>(variant.Model).Value;
-                    model.GetComponent<MeshFilter>().sharedMesh = modelMesh;
-                    model.GetComponent<MeshCollider>().sharedMesh = modelMesh;
-                    model.transform.parent = transform;
-                    model.transform.localPosition = new Vector3(x, y, z);
-                    ModelGameObjects.Add(chunkVoxelXYZ, model);
-                    Models.Add(chunkVoxelXYZ, blockVariant);
+                    
+                    
+                    
+                    // var modelMesh = em.GetSharedComponentManaged<ModelMesh>(blockState.Model).Value;
+                    // model.GetComponent<MeshFilter>().sharedMesh = modelMesh;
+                    // model.GetComponent<MeshCollider>().sharedMesh = modelMesh;
+                    // model.transform.parent = transform;
+                    // model.transform.localPosition = new Vector3(x, y, z);
+                    // ModelGameObjects.Add(chunkVoxelXYZ, model);
+                    // Models.Add(chunkVoxelXYZ, blockState);
                 }
             }
         }

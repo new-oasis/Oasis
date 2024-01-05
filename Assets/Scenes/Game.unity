@@ -184,7 +184,7 @@ PrefabInstance:
     - target: {fileID: 3453577772064654534, guid: 3052a85a5a1844d9c88f4e39936be251,
         type: 3}
       propertyPath: gravityMultiplier
-      value: 0
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 5462505298043376470, guid: 3052a85a5a1844d9c88f4e39936be251,
         type: 3}
@@ -406,7 +406,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Block: {fileID: 11400000, guid: 70ab1cb0c02404623933456d92efd6d0, type: 2}
-  VariantIndex: 0
+  BlockStateIndex: 0
 --- !u!1 &384916016
 GameObject:
   m_ObjectHideFlags: 0
@@ -426,7 +426,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!23 &384916017
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -674,7 +674,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &695613758
 Transform:
   m_ObjectHideFlags: 0
@@ -755,7 +755,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Block: {fileID: 11400000, guid: 70ab1cb0c02404623933456d92efd6d0, type: 2}
-  VariantIndex: 1
+  BlockStateIndex: 1
 --- !u!1 &728314294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1697,7 +1697,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Block: {fileID: 11400000, guid: ee21fc002ca46484c8d574ab3bcc37dc, type: 2}
-  VariantIndex: 0
+  BlockStateIndex: 0
 --- !u!23 &6427144447282491891
 MeshRenderer:
   m_ObjectHideFlags: 0

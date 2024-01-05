@@ -9,7 +9,7 @@ namespace Oasis.Mono
     public class BlockState : MonoBehaviour
     {
         public Assets.Block Block;
-        public int VariantIndex;
+        public int BlockStateIndex;
         
         private void Start()
         {
@@ -23,12 +23,12 @@ namespace Oasis.Mono
             var blockEntities = blockQuery.ToEntityArray(Unity.Collections.Allocator.TempJob);
             var blockEntity = blockEntities[blockIndex];
 
-            // Block Variant
-            var blockStateVariants = em.GetBuffer<Data.BlockState>(blockEntity);
-            var variant = blockStateVariants[VariantIndex];
+            // BlockStates
+            var blockStates = em.GetBuffer<Data.BlockState>(blockEntity);
+            var blockState = blockStates[BlockStateIndex];
             
             // Variant Model Mesh
-            var mesh = em.GetSharedComponentManaged<ModelMesh>(variant.Model).Value;
+            var mesh = em.GetSharedComponentManaged<ModelMesh>(blockState.Model).Value;
             GetComponent<MeshFilter>().mesh = mesh;
             
             // Update mesh collider

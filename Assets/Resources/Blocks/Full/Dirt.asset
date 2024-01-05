@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BlockType: 1
   TextureType: 1
-  Variants:
+  BlockStates:
   - States: []
     Model: {fileID: 11400000, guid: 140d166a774374076a40b1a2893f83e2, type: 2}

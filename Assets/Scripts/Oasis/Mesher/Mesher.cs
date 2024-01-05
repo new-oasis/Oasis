@@ -38,7 +38,7 @@ namespace Oasis.Mesher
             // World
             var em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
             var worldEntity = em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
-            var worldBlockVariants = em.GetBuffer<WorldBlockState>(worldEntity);
+            var worldBlockStates = em.GetBuffer<WorldBlockState>(worldEntity);
 
             // Loop over chunk in world
             for (var x = 0; x < chunkDims.x; x++)
@@ -56,8 +56,8 @@ namespace Oasis.Mesher
                     var adjacentIsWithinBounds = IsWithinBounds(adjacentVoxelXyz, worldDims);
                     var adjacentVoxel = (ushort) (adjacentIsWithinBounds ? voxels[adjacentVoxelIndex] : 0);
 
-                    var block = em.GetComponentData<Block>(worldBlockVariants[voxel].Block);
-                    var otherBlock = em.GetComponentData<Block>(worldBlockVariants[adjacentVoxel].Block);
+                    var block = em.GetComponentData<Block>(worldBlockStates[voxel].Block);
+                    var otherBlock = em.GetComponentData<Block>(worldBlockStates[adjacentVoxel].Block);
                     if (IsFaceVisible(block, otherBlock))
                     {
                         // Models computed separately because > 6 faces.
@@ -66,10 +66,10 @@ namespace Oasis.Mesher
 
                         // Assumes full block modelEntity with 6 faces.
                         // Get blockVariant for this voxel
-                        var variants = em.GetBuffer<BlockState>( worldBlockVariants[voxel].Block );
-                        var variant = variants[worldBlockVariants[voxel].VariantIndex];
-                        var model = em.GetComponentData<Model>(variant.Model);
-                        var modelElementEntities = em.GetBuffer<ModelElementReference>(variant.Model);
+                        var blockBlockStates = em.GetBuffer<BlockState>( worldBlockStates[voxel].Block );
+                        var blockBlockState = blockBlockStates[worldBlockStates[voxel].BlockStatesIndex];
+                        var model = em.GetComponentData<Model>(blockBlockState.Model);
+                        var modelElementEntities = em.GetBuffer<ModelElementReference>(blockBlockState.Model);
                         var modelFaces = em.GetBuffer<ModelFace>(modelElementEntities[0].Value);
 
                         // Loop through modelFaces to find the one with the correct side

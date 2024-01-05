@@ -3,27 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using Oasis.Common;
 using Oasis.Data;
+using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
-using Block = Oasis.Assets.Block;
-using World = Oasis.Data.World;
 
 namespace Oasis.Authoring
 {
+    
+    // Initial BlockStates
     [Serializable]
-    public struct WorldBlockVariant
+    public struct WorldBlockStateAuthoring
     {
-        public Block Block;
-        public int VariantIndex;
+        public Assets.Block Block;
+        public int BlockStatesIndex;
     }
-
 
     public class WorldAuthoring : MonoBehaviour
     {
         public WorldType WorldType;
         public int3 Dims;
-        public List<WorldBlockVariant> BlockVariants;
+        public List<WorldBlockStateAuthoring> BlockStates;
 
         public ushort Dirt;
         public ushort Grass;
@@ -34,7 +34,7 @@ namespace Oasis.Authoring
             {
                 // World
                 var entity = GetEntity(TransformUsageFlags.None);
-                AddComponent(entity, new World
+                AddComponent(entity, new Data.World
                 {
                     WorldType = authoring.WorldType,
                     Dims = authoring.Dims
@@ -43,20 +43,21 @@ namespace Oasis.Authoring
                 // WorldBlockVariants
                 var worldBlockVariants = AddBuffer<Data.WorldBlockState>(entity);
                 var blockAuthoringComponents = FindObjectsOfType<BlockAuthoring>();
-                foreach (var blockVariant in authoring.BlockVariants)
+                foreach (var blockState in authoring.BlockStates)
                 {
+                    // Find Block
                     var blockAuthoringComponent = blockAuthoringComponents
-                        .FirstOrDefault(component => component.Block == blockVariant.Block);
+                        .FirstOrDefault(component => component.Block == blockState.Block);
                     if (blockAuthoringComponent == null)
                     {
-                        Debug.LogError("No block authoring component found for " + blockVariant.Block.name);
+                        Debug.LogError("No block authoring component found for " + blockState.Block.name);
                         return;
                     }
 
                     worldBlockVariants.Add(new Data.WorldBlockState
                     {
                         Block = GetEntity(blockAuthoringComponent, TransformUsageFlags.None),
-                        VariantIndex = blockVariant.VariantIndex
+                        BlockStatesIndex = blockState.BlockStatesIndex
                     });
                 }
 
@@ -87,11 +88,16 @@ namespace Oasis.Authoring
                         else
                             voxels[i] = new Voxel {Value = 0};
                     }
-
-                    // voxels[i] = new Voxel {Value = 0};
-                    // Debug.Log(xyz + " = " + voxels[i].Value);
                 }
             }
+
         }
     }
 }
+
+
+// Q. Should World have buffer of blockState refs or actual blockStates?
+// A. Refs.
+// Unable to block.blockStates buffer from this world authoring anyway.
+// Can denormalize in Mesher if needed
+

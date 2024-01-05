@@ -14,11 +14,11 @@ namespace Oasis.Data
     public struct WorldBlockState : IBufferElementData, IEquatable<WorldBlockState>
     {
         public Entity Block;
-        public int VariantIndex;
+        public int BlockStatesIndex;
 
         public bool Equals(WorldBlockState other)
         {
-            return Block.Equals(other.Block) && VariantIndex == other.VariantIndex;
+            return Block.Equals(other.Block) && BlockStatesIndex == other.BlockStatesIndex;
         }
 
         public override bool Equals(object obj)
@@ -28,7 +28,7 @@ namespace Oasis.Data
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Block, VariantIndex);
+            return HashCode.Combine(Block, BlockStatesIndex);
         }
     }
 }

@@ -19,7 +19,7 @@
 //             _instance = this;
 //             em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
 //             var worldEntity = em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
-//             var worldBlockStates = em.GetBuffer<BlockStateElement>(worldEntity);
+//             var blockStates = em.GetBuffer<BlockStateElement>(worldEntity);
 //         
 //             root = gameObject.GetComponent<UIDocument>().rootVisualElement;
 //         }
