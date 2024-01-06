@@ -810,10 +810,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1339448442}
-  - component: {fileID: 1339448441}
   - component: {fileID: 1339448440}
   m_Layer: 0
-  m_Name: Toolbar
+  m_Name: Hud
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -831,25 +830,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d3b223103d69e54a801b3135d7244ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectedItem: 0
-  blockStates: []
---- !u!114 &1339448441
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1339448439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 19102, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_PanelSettings: {fileID: 11400000, guid: bedf5348a25974492b6cdbd6b2a92f0a, type: 2}
-  m_ParentUI: {fileID: 0}
-  sourceAsset: {fileID: 9197481963319205126, guid: 26c28f1b05e9be94689e58d3bda8369b,
-    type: 3}
-  m_SortingOrder: 0
+  Blocks:
+  - {fileID: 11400000, guid: 79779082f142245d7a658efe90579fb2, type: 2}
+  - {fileID: 11400000, guid: ee21fc002ca46484c8d574ab3bcc37dc, type: 2}
+  - {fileID: 11400000, guid: 70ab1cb0c02404623933456d92efd6d0, type: 2}
 --- !u!4 &1339448442
 Transform:
   m_ObjectHideFlags: 0
@@ -1191,6 +1175,8 @@ MonoBehaviour:
   - Block: {fileID: 11400000, guid: 79779082f142245d7a658efe90579fb2, type: 2}
     BlockStatesIndex: 0
   - Block: {fileID: 11400000, guid: ee21fc002ca46484c8d574ab3bcc37dc, type: 2}
+    BlockStatesIndex: 0
+  - Block: {fileID: 11400000, guid: 70ab1cb0c02404623933456d92efd6d0, type: 2}
     BlockStatesIndex: 0
   Dirt: 1
   Grass: 2

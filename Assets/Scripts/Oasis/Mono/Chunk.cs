@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Oasis.Common;
 using Oasis.Data;
+using TMPro;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
@@ -19,7 +20,7 @@ namespace Oasis.Mono
         Entity worldEntity;
         private Data.World world;
         
-        public Dictionary<int3, BlockState> Models;
+        public Dictionary<int3, BlockStateRef> Models;
         public Dictionary<int3, GameObject> ModelGameObjects;
         public GameObject ModelPrefab;
         
@@ -30,7 +31,7 @@ namespace Oasis.Mono
             world = em.GetComponentData<Data.World>(worldEntity);
 
             ModelGameObjects = new Dictionary<int3,GameObject>();
-            Models = new Dictionary<int3, BlockState>();
+            Models = new Dictionary<int3, BlockStateRef>();
             
             UpdateChunk();
         }
@@ -56,7 +57,7 @@ namespace Oasis.Mono
 
         private void UpdateModels(NativeArray<ushort> voxels)
         {
-            var worldBlockStates = em.GetBuffer<Data.WorldBlockState>(worldEntity);
+            var worldBlockStates = em.GetBuffer<Data.BlockStateRef>(worldEntity);
             
             // Remove any models that are no longer in the chunk
             var indicesToRemove = new List<int3>();
@@ -88,11 +89,13 @@ namespace Oasis.Mono
                 var voxelIndex = voxelXyz.ToIndex(world.Dims);
                 var voxel = voxels[voxelIndex];
         
-                var blockVariant = worldBlockStates[voxel]; // TODO optimize by getting blockIds of models and avoid 16^3 block lookups
-                if (em.GetComponentData<Block>(blockVariant.Block).BlockType == BlockType.Model)
+                var blockStateRef = worldBlockStates[voxel]; // TODO optimize by getting blockIds of models and avoid 16^3 block lookups
+                if (em.GetComponentData<Block>(blockStateRef.Block).BlockType == BlockType.Model)
                 {
+                    Debug.Log($"Found model block at {chunkVoxelXYZ}");
+                    
                     // Continue if modelBlock already exists
-                    if (Models.ContainsKey(chunkVoxelXYZ) && Models[chunkVoxelXYZ].Equals(blockVariant))
+                    if (Models.ContainsKey(chunkVoxelXYZ) && Models[chunkVoxelXYZ].Equals(blockStateRef))
                         continue;
                     
                     // Remove any existing model at xyz
@@ -107,14 +110,15 @@ namespace Oasis.Mono
                     var model = Instantiate(ModelPrefab);
                     
                     
-                    
-                    // var modelMesh = em.GetSharedComponentManaged<ModelMesh>(blockState.Model).Value;
-                    // model.GetComponent<MeshFilter>().sharedMesh = modelMesh;
-                    // model.GetComponent<MeshCollider>().sharedMesh = modelMesh;
-                    // model.transform.parent = transform;
-                    // model.transform.localPosition = new Vector3(x, y, z);
-                    // ModelGameObjects.Add(chunkVoxelXYZ, model);
-                    // Models.Add(chunkVoxelXYZ, blockState);
+                    // Get the blockState for the model
+                    var blockStates = em.GetBuffer<Data.BlockState>(blockStateRef.Block);
+                    var modelMesh = em.GetSharedComponentManaged<ModelMesh>(blockStates[blockStateRef.BlockStatesIndex].Model).Value;
+                    model.GetComponent<MeshFilter>().sharedMesh = modelMesh;
+                    model.GetComponent<MeshCollider>().sharedMesh = modelMesh;
+                    model.transform.parent = transform;
+                    model.transform.localPosition = new Vector3(x, y, z);
+                    ModelGameObjects.Add(chunkVoxelXYZ, model);
+                    Models.Add(chunkVoxelXYZ, blockStateRef);
                 }
             }
         }

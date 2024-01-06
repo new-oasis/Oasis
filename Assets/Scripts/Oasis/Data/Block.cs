@@ -63,4 +63,27 @@ namespace Oasis.Data
         public byte Axis;  // 0 == x, 1 == y, 2 == z
         public float Angle;
     }
-}
+    
+    public struct BlockStateRef : IBufferElementData, IEquatable<BlockStateRef>
+    {
+         public Entity Block;
+         public int BlockStatesIndex;
+ 
+         public bool Equals(BlockStateRef other)
+         {
+             return Block.Equals(other.Block) && BlockStatesIndex == other.BlockStatesIndex;
+         }
+ 
+         public override bool Equals(object obj)
+         {
+             return obj is BlockStateRef other && Equals(other);
+         }
+ 
+         public override int GetHashCode()
+         {
+             return HashCode.Combine(Block, BlockStatesIndex);
+         }
+     }
+}    
+   
+   

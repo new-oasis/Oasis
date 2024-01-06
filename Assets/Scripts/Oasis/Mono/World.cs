@@ -53,18 +53,21 @@ namespace Oasis.Mono
             }
         }
 
-        public void Place(int3 voxel, WorldBlockState worldBlockState)
+        public void Place(int3 voxel, BlockStateRef blockStateRef)
         {
-            Debug.Log($"Got voxel {voxel} and worldBlockState {worldBlockState}");
+            Debug.Log($"Got voxel {voxel} and blockStateRef {_em.GetName(blockStateRef.Block)} blockStateIndex {blockStateRef.BlockStatesIndex}");
             var voxelIndex = voxel.ToIndex(_worldData.Dims);
 
             // Get worldBlockStateIndex
-            var worldBlockStates = _em.GetBuffer<WorldBlockState>(_worldEntity);
-            var worldBlockStateIndex = (ushort)worldBlockStates.AsNativeArray().IndexOf(worldBlockState);
+            var worldBlockStates = _em.GetBuffer<BlockStateRef>(_worldEntity);
+            var worldBlockStateIndex = worldBlockStates.AsNativeArray().IndexOf(blockStateRef);
+            if (worldBlockStateIndex == -1)
+                Debug.LogError($"Could not find blockStateRef {blockStateRef} in worldBlockStates");
+            Debug.Log($"worldBlockStateIndex is : {worldBlockStateIndex}");
             
             // Update voxel
             var voxels = _em.GetBuffer<Voxel>(_worldEntity);
-            voxels[voxelIndex] = new Voxel {Value = worldBlockStateIndex};
+            voxels[voxelIndex] = new Voxel {Value = (ushort)worldBlockStateIndex};
         
             UpdateChunkMeshes(voxelIndex);
             OnVoxelChanged?.Invoke(voxelIndex, (ushort)worldBlockStateIndex);

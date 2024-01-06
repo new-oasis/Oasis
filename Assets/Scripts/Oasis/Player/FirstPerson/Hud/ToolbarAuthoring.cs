@@ -1,28 +1,44 @@
 using System.Collections.Generic;
+using System.Linq;
 using Oasis.Data;
-using UnityEngine;
 using Unity.Entities;
+using UnityEngine;
 
-public class ToolbarAuthoring : MonoBehaviour
+namespace Oasis.Player.FirstPerson.Hud
 {
-    public int selectedItem;
-    public List<GameObject> blockStates;
-    
-    private class ToolbarBaker : Baker<ToolbarAuthoring>
+    public class ToolbarAuthoring : MonoBehaviour
     {
-        public override void Bake(ToolbarAuthoring authoring)
+        public List<Oasis.Assets.Block> Blocks;
+    
+        private class ToolbarBaker : Baker<ToolbarAuthoring>
         {
-            AddComponent<ToolbarData>();
+            public override void Bake(ToolbarAuthoring authoring)
+            {
+                var entity = GetEntity(TransformUsageFlags.None);
+                AddComponent<ToolbarData>(entity);
             
-            // var toolbarBlockStates = AddBuffer<BlockState>();
-            // foreach (var blockState in authoring.blockStates)
-               // toolbarBlockStates.Add(new BlockState{Value = GetEntity(blockState, TransformUsageFlags.None)});
+                var toolbarBlockStates = AddBuffer<BlockStateRef>(entity);
+                var blockAuthoringComponents = FindObjectsOfType<Authoring.BlockAuthoring>();
+            
+                foreach (var block in authoring.Blocks)
+                {
+                    var blockAuthoringComponent = blockAuthoringComponents
+                        .FirstOrDefault(component => component.Block == block);
+                    if (blockAuthoringComponent == null)
+                        Debug.LogError("No block authoring component found for toolbar block");
+                
+                    toolbarBlockStates.Add(new BlockStateRef
+                    {
+                        Block = GetEntity(blockAuthoringComponent, TransformUsageFlags.None)
+                    });
+                }
+            }
         }
     }
-}
 
 
-public struct ToolbarData : IComponentData
-{
-    public int selectedItem;
+    public struct ToolbarData : IComponentData
+    {
+        public int SelectedItem;
+    }
 }

@@ -41,7 +41,7 @@ namespace Oasis.Authoring
                 });
 
                 // WorldBlockVariants
-                var worldBlockVariants = AddBuffer<Data.WorldBlockState>(entity);
+                var worldBlockVariants = AddBuffer<Data.BlockStateRef>(entity);
                 var blockAuthoringComponents = FindObjectsOfType<BlockAuthoring>();
                 foreach (var blockState in authoring.BlockStates)
                 {
@@ -54,7 +54,7 @@ namespace Oasis.Authoring
                         return;
                     }
 
-                    worldBlockVariants.Add(new Data.WorldBlockState
+                    worldBlockVariants.Add(new Data.BlockStateRef
                     {
                         Block = GetEntity(blockAuthoringComponent, TransformUsageFlags.None),
                         BlockStatesIndex = blockState.BlockStatesIndex

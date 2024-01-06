@@ -38,7 +38,7 @@ namespace Oasis.Mesher
             // World
             var em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
             var worldEntity = em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
-            var worldBlockStates = em.GetBuffer<WorldBlockState>(worldEntity);
+            var worldBlockStates = em.GetBuffer<BlockStateRef>(worldEntity);
 
             // Loop over chunk in world
             for (var x = 0; x < chunkDims.x; x++)
@@ -57,6 +57,12 @@ namespace Oasis.Mesher
                     var adjacentVoxel = (ushort) (adjacentIsWithinBounds ? voxels[adjacentVoxelIndex] : 0);
 
                     var block = em.GetComponentData<Block>(worldBlockStates[voxel].Block);
+                    if (adjacentVoxel > 10)
+                    {
+                        Debug.Log(adjacentVoxel);
+                        var adjacentBlock = em.GetComponentData<Block>(worldBlockStates[adjacentVoxel].Block);
+                        Debug.Log(adjacentBlock.BlockName.ToString());
+                    }
                     var otherBlock = em.GetComponentData<Block>(worldBlockStates[adjacentVoxel].Block);
                     if (IsFaceVisible(block, otherBlock))
                     {
