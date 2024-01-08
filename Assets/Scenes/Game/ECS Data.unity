@@ -236,10 +236,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NumElements: 64
   TextureType: 3
-  Format: 12
+  Format: 50
   Textures:
   - {fileID: 11400000, guid: e6507421b65dd4573a635b92dc589341, type: 2}
-  Array: {fileID: 18700000, guid: 1c2fca95d408c452d98b1c3b491c9742, type: 2}
+  Array: {fileID: 18700000, guid: c5b6e619bf4f34330b39691e76306680, type: 2}
 --- !u!1 &203818855
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,7 +812,7 @@ GameObject:
   - component: {fileID: 1339448442}
   - component: {fileID: 1339448440}
   m_Layer: 0
-  m_Name: Hud
+  m_Name: UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -928,12 +928,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NumElements: 64
   TextureType: 1
-  Format: 10
+  Format: 50
   Textures:
   - {fileID: 11400000, guid: 2ac152f8493c84fd69cce27fc7f4cc38, type: 2}
   - {fileID: 11400000, guid: 2a8c1a48f6b9f4d799a972cf80f4bde5, type: 2}
   - {fileID: 11400000, guid: e62a42f78fbf44dac97960f48e34274d, type: 2}
-  Array: {fileID: 18700000, guid: f145454424d8441e8b43643e373ec262, type: 2}
+  Array: {fileID: 18700000, guid: c5b6e619bf4f34330b39691e76306680, type: 2}
 --- !u!1 &1500901361
 GameObject:
   m_ObjectHideFlags: 0

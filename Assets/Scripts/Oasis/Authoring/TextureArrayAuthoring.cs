@@ -22,7 +22,8 @@ namespace Oasis.Authoring
                 var entity = GetEntity(TransformUsageFlags.None);
                 
                 // Texture2DArray
-                var path = $"Assets/Resources/Textures/Texture2DArray_{authoring.Format.ToString()}.asset";
+                // https://docs.unity3d.com/Manual/class-TextureImporterOverride.html  <== Recommended TextureTypes for platforms
+                var path = $"Assets/Resources/Textures/Texture2DArray_{authoring.TextureType}_{authoring.Format.ToString()}.asset";
                 if (AssetDatabase.LoadAssetAtPath(path, typeof(Texture2DArray)) as Texture2DArray)
                     authoring.Array = AssetDatabase.LoadAssetAtPath<Texture2DArray>(path);
                 else

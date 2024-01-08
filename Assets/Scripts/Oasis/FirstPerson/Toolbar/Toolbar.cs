@@ -1,4 +1,5 @@
 using Oasis.Data;
+using Oasis.Player.FirstPerson.Hud;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UIElements;
 
-namespace Oasis.Player.FirstPerson.Hud
+namespace Oasis.FirstPerson.Toolbar
 {
     public class Toolbar : MonoBehaviour
     {
@@ -28,8 +29,7 @@ namespace Oasis.Player.FirstPerson.Hud
         {
             _instance = this;
             _em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
-            var worldEntity = _em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
-            
+            // var worldEntity = _em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
             // var bockStates = em.GetBuffer<BlockState>(worldEntity);
         
             // Get ToolbarDataEntity
@@ -39,7 +39,7 @@ namespace Oasis.Player.FirstPerson.Hud
         
             _root = gameObject.GetComponent<UIDocument>().rootVisualElement;
             _toolbar = _root.Q<VisualElement>("toolbar");
-            _slots = _toolbar.Query<VisualElement>("toolbarSlot");
+            _slots = _toolbar.Query<VisualElement>("slot");
         
             ToolbarItemGo = Instantiate(ToolbarItemPrefab);
             var meshFilter = ToolbarItemGo.GetComponent<MeshFilter>();
@@ -60,8 +60,9 @@ namespace Oasis.Player.FirstPerson.Hud
                 image.image = texture;
                 if (slot.childCount > 0) slot.RemoveAt(0);
                 slot.Add(image);
-                Debug.Log($"Setting toolbar slot image");
-
+                var index = slotIndex;
+                slot.RegisterCallback<ClickEvent>((ev) => SetActiveItem(index));
+                
                 slotIndex++;
             }
 
@@ -95,13 +96,14 @@ namespace Oasis.Player.FirstPerson.Hud
     
         public void SetActiveItem(int slotIndex)
         {
+            Debug.Log($"Setting slotIndex to {slotIndex}");
             var toolbarData = _em.CreateEntityQuery(typeof(ToolbarData)).GetSingleton<ToolbarData>();
             toolbarData.SelectedItem = slotIndex;
             _em.SetComponentData(ToolbarEntity, toolbarData);
         
             for (var i = 0; i < 10; i++)
-                _slots.AtIndex(i).RemoveFromClassList("toolbarSlotActive");
-            _slots.AtIndex(slotIndex).AddToClassList("toolbarSlotActive");
+                _slots.AtIndex(i).RemoveFromClassList("slotActive");
+            _slots.AtIndex(slotIndex).AddToClassList("slotActive");
         }
     
     }
