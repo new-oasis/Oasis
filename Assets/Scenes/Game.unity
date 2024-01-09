@@ -134,17 +134,17 @@ PrefabInstance:
     - target: {fileID: 552426444334968838, guid: 3052a85a5a1844d9c88f4e39936be251,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 552426444334968838, guid: 3052a85a5a1844d9c88f4e39936be251,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 552426444334968838, guid: 3052a85a5a1844d9c88f4e39936be251,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 552426444334968838, guid: 3052a85a5a1844d9c88f4e39936be251,
         type: 3}
@@ -1064,12 +1064,12 @@ GameObject:
   - component: {fileID: 1206460888}
   - component: {fileID: 1206460887}
   m_Layer: 0
-  m_Name: Joystick
+  m_Name: Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1206460886
 Transform:
   m_ObjectHideFlags: 0
@@ -1097,10 +1097,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29ee72c0ce3249ddaf306517da199dc2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  joystickUXML: {fileID: 9197481963319205126, guid: ad1dc3d2cfd84126badc5b6ac29c04b4,
-    type: 3}
-  joystickUSS: {fileID: 7433441132597879392, guid: ab738e7cbbf3487fac2435ac90e67c3d,
-    type: 3}
+  smoothingFactor: 200
 --- !u!114 &1206460888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1247,12 +1244,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a065ea72947c4d81b177a7cb0f13e4c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!20 &1423603164 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 9052379300812885738, guid: 3052a85a5a1844d9c88f4e39936be251,
-    type: 3}
-  m_PrefabInstance: {fileID: 13573148}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1443440306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1576,11 +1567,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b20e7a5d00e5b405896bdacbb1ad20e0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraToRotate: {fileID: 1423603164}
-  characterToRotate: {fileID: 13573149}
-  sensitivityX: 1
-  sensitivityY: 1
-  smoothingFactor: 5
+  Sensitivity: 50
 --- !u!114 &1826226967
 MonoBehaviour:
   m_ObjectHideFlags: 0

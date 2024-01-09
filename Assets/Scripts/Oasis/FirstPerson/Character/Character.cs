@@ -11,7 +11,6 @@ namespace Oasis.Game.Player.FirstPerson.Character
         [SerializeField] private float smoothTime = 0.005f;
         [SerializeField] private float gravityMultiplier = 3;
         [SerializeField] private float jumpPower;
-        public float mouseSensitivity = 25f;
         private readonly float gravity = -9.81f;
         private CharacterController controller;
         private float currentVelocity;
@@ -50,21 +49,38 @@ namespace Oasis.Game.Player.FirstPerson.Character
 
         public void Look(InputAction.CallbackContext context)
         {
-            var mouseX = context.ReadValue<Vector2>().x * mouseSensitivity * Time.deltaTime;
-            var mouseY = context.ReadValue<Vector2>().y * mouseSensitivity * Time.deltaTime;
+            const float lookSensitivity = 25f;
+            Look( context.ReadValue<Vector2>(), lookSensitivity);
+        }
 
-            xRotation -= mouseY;
+        public void Look(Vector2 input, float lookSensitivity = 1f)
+        {
+            var x = input.x * lookSensitivity * Time.deltaTime;
+            var y = input.y * lookSensitivity * Time.deltaTime;
+
+            xRotation -= y;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
             cameraTransform.localRotation = Quaternion.Euler(xRotation, 0.0f, 0.0f); // xRotation
 
-            yRotation += mouseX;
+            yRotation += x;
             transform.rotation = Quaternion.Euler(0.0f, yRotation, 0.0f); // yRotation
             // Highlight.Instance.MoveHighlight();
         }
 
+
         public void Move(InputAction.CallbackContext context)
         {
             input = context.ReadValue<Vector2>();
+            direction = new Vector3(input.x, 0.0f, input.y);
+            direction = Quaternion.Euler(0.0f, yRotation, 0.0f) * direction;
+        }
+
+        public void Move(Vector2 input)
+        {
+            // float characterFacingRadians = transform.rotation.eulerAngles.y;
+            // Vector2 alignedInput = Quaternion.Euler(0f, -characterFacingRadians, 0f) * input;
+            // direction = new Vector3(alignedInput.x, 0.0f, alignedInput.y);
+
             direction = new Vector3(input.x, 0.0f, input.y);
             direction = Quaternion.Euler(0.0f, yRotation, 0.0f) * direction;
         }
@@ -80,12 +96,11 @@ namespace Oasis.Game.Player.FirstPerson.Character
             var angleToNorth = Vector3.SignedAngle(transform.forward, Vector3.forward, Vector3.up);
             if (angleToNorth >= -45 && angleToNorth <= 45)
                 return "north";
-            else if (angleToNorth > 45 && angleToNorth <= 135)
+            if (angleToNorth > 45 && angleToNorth <= 135)
                 return "east";
-            else if (angleToNorth > 135 && angleToNorth <= 225)
+            if (angleToNorth > 135 && angleToNorth <= 225)
                 return "south";
-            else
-                return "west";
+            return "west";
         }
 
         private void ApplyGravity()
