@@ -1,12 +1,12 @@
 using Oasis.Data;
-using Oasis.Player.FirstPerson.Hud;
+using Oasis.FirstPerson;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using World = Oasis.Mono.World;
 
-namespace Oasis.Player.FirstPerson.Highlight
+namespace Oasis.FirstPerson
 {
     public class Highlight : MonoBehaviour
     {
@@ -29,13 +29,14 @@ namespace Oasis.Player.FirstPerson.Highlight
 
         private void Update()
         {
-            if (Time.frameCount % 10 == 0)
+            if (Mouse.current != null && Time.frameCount % 10 == 0)
                 MoveHighlight();
         }
 
         public void MoveHighlight()
         {
             if (Camera.main == null) return;
+            if (Mouse.current == null) return;
             var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
@@ -53,7 +54,12 @@ namespace Oasis.Player.FirstPerson.Highlight
         {
             if (!context.started) return;
             if (Camera.main == null) return;
-            var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Place(Mouse.current.position.ReadValue());
+        }
+        public void Place(Vector2 screenPoint)
+        {
+            Debug.Log($"Placing at {screenPoint}");
+            var ray = Camera.main.ScreenPointToRay(screenPoint);
             RaycastHit hit;
             if (!Physics.Raycast(ray, out hit)) return;
             var voxelAdjacent = (hit.point + hit.normal * 0.05f).ToInt3();
@@ -67,11 +73,18 @@ namespace Oasis.Player.FirstPerson.Highlight
             World.Instance.Place(voxelAdjacent, toolbarBlockStateRefs[ toolbarData.SelectedItem ]);
         }
 
+
+
         public void Remove(InputAction.CallbackContext context)
         {
             if (!context.started) return;
             if (Camera.main == null) return;
-            var ray = Camera.main.ScreenPointToRay(Mouse.current.position.ReadValue());
+            Remove(Mouse.current.position.ReadValue());
+        }
+
+        public void Remove(Vector2 screenPoint)
+        {
+            var ray = Camera.main.ScreenPointToRay(screenPoint);
             RaycastHit hit;
             if (!Physics.Raycast(ray, out hit)) return;
             var voxel = (hit.point - hit.normal * 0.05f).ToInt3();

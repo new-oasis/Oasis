@@ -4,7 +4,7 @@ using Oasis.Data;
 using Unity.Entities;
 using UnityEngine;
 
-namespace Oasis.Player.FirstPerson.Hud
+namespace Oasis.FirstPerson
 {
     public class ToolbarAuthoring : MonoBehaviour
     {

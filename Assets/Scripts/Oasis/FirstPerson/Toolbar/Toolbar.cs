@@ -1,5 +1,5 @@
 using Oasis.Data;
-using Oasis.Player.FirstPerson.Hud;
+using Oasis.FirstPerson;
 using Unity.Collections;
 using Unity.Entities;
 using UnityEngine;
@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.Controls;
 using UnityEngine.UIElements;
 
-namespace Oasis.FirstPerson.Toolbar
+namespace Oasis.FirstPerson
 {
     public class Toolbar : MonoBehaviour
     {

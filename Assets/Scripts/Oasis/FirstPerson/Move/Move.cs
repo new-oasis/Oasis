@@ -1,8 +1,8 @@
-using Oasis.Game.Player.FirstPerson.Character;
+using Oasis.FirstPerson;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace Oasis.FirstPerson.Joystick
+namespace Oasis.FirstPerson
 {
     public class Move : MonoBehaviour
     {
@@ -41,6 +41,7 @@ namespace Oasis.FirstPerson.Joystick
             var normalizationFactor = touchArea.layout.width / 2;
             if (knobOffset != lastKnobOffset)
                 Character.Instance.Move(new Vector2(knobOffset.x, -knobOffset.y)/normalizationFactor);
+
             
             lastKnobOffset = knobOffset;
         }

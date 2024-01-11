@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Oasis.Game.Player.FirstPerson.Character
+namespace Oasis.FirstPerson
 {
     [RequireComponent(typeof(CharacterController))]
     public class Character : MonoBehaviour

@@ -1,0 +1,28 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement name="Screen" style="flex-grow: 1; flex-direction: row; background-color: rgba(178, 241, 205, 0.48); position: relative; justify-content: center; align-items: center;">
+        <ui:VisualElement name="Toolbar" style="bottom: 0; align-self: auto; width: 1000px; height: 200px; position: absolute; align-items: auto; background-color: rgba(229, 102, 102, 0.55);" />
+        <ui:VisualElement name="Move" style="width: 200px; height: 200px; bottom: 50px; position: absolute; left: 50px; background-color: rgba(131, 181, 233, 0.66);" />
+        <ui:VisualElement name="Reticule" style="width: 100px; height: 100px; background-color: rgba(221, 131, 233, 0.66);" />
+    </ui:VisualElement>
+    <ui:VisualElement name="Container" style="flex-grow: 1; flex-direction: row; background-color: rgba(178, 241, 205, 0.48); display: none;">
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 34, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 34, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 34, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 34, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 34, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 217, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 217, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 217, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 217, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(231, 217, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(132, 231, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(132, 231, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(132, 231, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(132, 231, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(132, 231, 34, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(34, 188, 231, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(34, 188, 231, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(34, 188, 231, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+        <ui:VisualElement name="Slot" style="width: 90px; height: 90px; background-color: rgba(34, 188, 231, 0.68); margin-top: 5px; margin-right: 5px; margin-bottom: 5px; margin-left: 5px; flex-shrink: 0;" />
+    </ui:VisualElement>
+</ui:UXML>
