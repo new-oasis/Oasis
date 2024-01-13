@@ -17,6 +17,10 @@ namespace Oasis.FirstPerson
         public int3 HighlightXYZ;
         public int3 BlueprintStartXYZ;
 
+        private int3 blockToRemove;
+        private int removeCount;
+        private float removeStartTime;
+
         private void Awake()
         {
             _instance = this;
@@ -58,7 +62,6 @@ namespace Oasis.FirstPerson
         }
         public void Place(Vector2 screenPoint)
         {
-            Debug.Log($"Placing at {screenPoint}");
             var ray = Camera.main.ScreenPointToRay(screenPoint);
             RaycastHit hit;
             if (!Physics.Raycast(ray, out hit)) return;
@@ -88,7 +91,23 @@ namespace Oasis.FirstPerson
             RaycastHit hit;
             if (!Physics.Raycast(ray, out hit)) return;
             var voxel = (hit.point - hit.normal * 0.05f).ToInt3();
-            World.Instance.Remove(voxel);
+
+            // If the block to remove has changed or the remove action has been inactive, reset the counter and timer
+            if (!voxel.Equals(blockToRemove) || Time.time - removeStartTime > 0.5f)
+            {
+                blockToRemove = voxel;
+                removeCount = 0;
+                removeStartTime = Time.time;
+            }
+            removeCount++;
+
+            // If the counter has reached 5 within 1 second, remove the block
+            if (removeCount >= 5 && Time.time - removeStartTime <= 1)
+            {
+                World.Instance.Remove(blockToRemove);
+                removeCount = 0;
+                removeStartTime = Time.time;
+            }
         }
 
         public void Blueprint(InputAction.CallbackContext context)
