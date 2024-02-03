@@ -37,7 +37,9 @@ namespace Oasis.Authoring
                     TextureType = authoring.Model.TextureType,
                     NonSolidBlocksMovement = authoring.Model.BlocksMovement,
                     NonSolidHitBoxFrom = authoring.Model.NonSolidHitBoxFrom /16f,
-                    NonSolidHitBoxTo = authoring.Model.NonSolidHitBoxTo /16f
+                    NonSolidHitBoxTo = authoring.Model.NonSolidHitBoxTo /16f,
+                    Light = authoring.Model.Light,
+                    LightPosition = authoring.Model.LightPosition
                 });
 
                 // ModelElements

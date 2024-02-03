@@ -108,31 +108,49 @@ namespace Oasis.Mono
                     }
                     
                     // Add new model at xyz
-                    var model = Instantiate(ModelPrefab);
+                    var modelGO = Instantiate(ModelPrefab);
                     
                     // Get the blockState for the model
                     var blockStates = em.GetBuffer<Data.BlockState>(blockStateRef.Block);
                     var modelEntity = blockStates[blockStateRef.BlockStatesIndex].Model;
                     var modelMesh = em.GetSharedComponentManaged<ModelMesh>(modelEntity).Value;
                     var modelData = em.GetComponentData<Data.Model>(modelEntity);
+                    modelGO.name = $"{chunkVoxelXYZ.ToString()} {modelData.Name}";
 
-                    // Target and movement collider
+                    modelGO.GetComponent<MeshFilter>().sharedMesh = modelMesh;
+                    modelGO.transform.parent = transform;
+                    modelGO.transform.localPosition = new Vector3(x, y, z);
+                    ModelGameObjects.Add(chunkVoxelXYZ, modelGO);
+                    Models.Add(chunkVoxelXYZ, blockStateRef);
+
+                    // Collider for playerTarget and playerMovement collider
                     var from = modelData.NonSolidHitBoxFrom;
                     var to = modelData.NonSolidHitBoxTo;
-                    var boxCollider = model.AddComponent<BoxCollider>();
+                    var boxCollider = modelGO.AddComponent<BoxCollider>();
                     boxCollider.center = (from + to) / 2;
                     boxCollider.size = to - from;
                     boxCollider.isTrigger = false;
-                    Debug.Log("from: " + from + " \tto: " + to + " \tcenter: " + boxCollider.center + " \tsize: " + boxCollider.size);
-                        
+                    // Debug.Log("from: " + from + " \tto: " + to + " \tcenter: " + boxCollider.center + " \tsize: " + boxCollider.size);
                     if (!modelData.NonSolidBlocksMovement)
-                        model.layer = LayerMask.NameToLayer("Ignore Player Movement");
+                        modelGO.layer = LayerMask.NameToLayer("Ignore Player Movement");
 
-                    model.GetComponent<MeshFilter>().sharedMesh = modelMesh;
-                    model.transform.parent = transform;
-                    model.transform.localPosition = new Vector3(x, y, z);
-                    ModelGameObjects.Add(chunkVoxelXYZ, model);
-                    Models.Add(chunkVoxelXYZ, blockStateRef);
+
+                    // Add point light component to game object and set light intensity
+                    if (modelData.Light > 0)
+                    {
+                        var lightGO = new GameObject("Light");
+                        lightGO.transform.parent = modelGO.transform;
+                        var light = lightGO.AddComponent<Light>();
+                        light.type = LightType.Point;
+                        light.intensity = modelData.Light;
+                        light.range = 10;
+                        light.color = Color.white;
+                        lightGO.transform.localPosition = new Vector3(modelData.LightPosition.x, modelData.LightPosition.y, modelData.LightPosition.z);
+                    
+                        // Disable castShadows
+                        // modelGO.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+                    }
+
                 }
             }
         }

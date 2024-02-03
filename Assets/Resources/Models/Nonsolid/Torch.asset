@@ -117,7 +117,12 @@ MonoBehaviour:
         z: 0
       Axis: 0
       Angle: 0
-  NonSolidBlocksMovement: 0
+  Light: 1
+  LightPosition:
+    x: 0.5
+    y: 0.625
+    z: 0.5
+  BlocksMovement: 0
   NonSolidHitBoxFrom:
     x: 7
     y: 0
