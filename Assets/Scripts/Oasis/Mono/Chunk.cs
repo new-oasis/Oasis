@@ -6,6 +6,7 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.InputSystem.UI;
 using World = Oasis.Data.World;
 
 namespace Oasis.Mono
@@ -92,7 +93,7 @@ namespace Oasis.Mono
                 var blockStateRef = worldBlockStates[voxel]; // TODO optimize by getting blockIds of models and avoid 16^3 block lookups
                 if (em.GetComponentData<Block>(blockStateRef.Block).BlockType == BlockType.Model)
                 {
-                    Debug.Log($"Found model block at {chunkVoxelXYZ}");
+                    // Debug.Log($"Found model block at {chunkVoxelXYZ}");
                     
                     // Continue if modelBlock already exists
                     if (Models.ContainsKey(chunkVoxelXYZ) && Models[chunkVoxelXYZ].Equals(blockStateRef))
@@ -109,12 +110,25 @@ namespace Oasis.Mono
                     // Add new model at xyz
                     var model = Instantiate(ModelPrefab);
                     
-                    
                     // Get the blockState for the model
                     var blockStates = em.GetBuffer<Data.BlockState>(blockStateRef.Block);
-                    var modelMesh = em.GetSharedComponentManaged<ModelMesh>(blockStates[blockStateRef.BlockStatesIndex].Model).Value;
+                    var modelEntity = blockStates[blockStateRef.BlockStatesIndex].Model;
+                    var modelMesh = em.GetSharedComponentManaged<ModelMesh>(modelEntity).Value;
+                    var modelData = em.GetComponentData<Data.Model>(modelEntity);
+
+                    // Target and movement collider
+                    var from = modelData.NonSolidHitBoxFrom;
+                    var to = modelData.NonSolidHitBoxTo;
+                    var boxCollider = model.AddComponent<BoxCollider>();
+                    boxCollider.center = (from + to) / 2;
+                    boxCollider.size = to - from;
+                    boxCollider.isTrigger = false;
+                    Debug.Log("from: " + from + " \tto: " + to + " \tcenter: " + boxCollider.center + " \tsize: " + boxCollider.size);
+                        
+                    if (!modelData.NonSolidBlocksMovement)
+                        model.layer = LayerMask.NameToLayer("Ignore Player Movement");
+
                     model.GetComponent<MeshFilter>().sharedMesh = modelMesh;
-                    model.GetComponent<MeshCollider>().sharedMesh = modelMesh;
                     model.transform.parent = transform;
                     model.transform.localPosition = new Vector3(x, y, z);
                     ModelGameObjects.Add(chunkVoxelXYZ, model);

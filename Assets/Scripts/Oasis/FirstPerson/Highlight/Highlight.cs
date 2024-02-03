@@ -1,3 +1,4 @@
+using Oasis.Common;
 using Oasis.Data;
 using Oasis.FirstPerson;
 using Unity.Entities;
@@ -5,6 +6,8 @@ using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using World = Oasis.Mono.World;
+using UnityEngine.iOS;
+using System.Collections;
 
 namespace Oasis.FirstPerson
 {
@@ -15,11 +18,7 @@ namespace Oasis.FirstPerson
 
         private EntityManager _em;
         public int3 HighlightXYZ;
-        public int3 BlueprintStartXYZ;
-
-        private int3 blockToRemove;
-        private int removeCount;
-        private float removeStartTime;
+        public Mesh cubeMesh;
 
         private void Awake()
         {
@@ -33,8 +32,12 @@ namespace Oasis.FirstPerson
 
         private void Update()
         {
-            if (Mouse.current != null && Time.frameCount % 10 == 0)
+            // Test if the mouse is moving
+            if (Mouse.current != null && (Mouse.current.delta.ReadValue().x != 0 || Mouse.current.delta.ReadValue().x != 0))
                 MoveHighlight();
+
+            // if (Mouse.current != null && Time.frameCount % 10 == 0)
+                // MoveHighlight();
         }
 
         public void MoveHighlight()
@@ -45,104 +48,13 @@ namespace Oasis.FirstPerson
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                var hitVector3 = hit.point - hit.normal * 0.05f;
-                var floor = new float3(Mathf.Floor(hitVector3.x), Mathf.Floor(hitVector3.y), Mathf.Floor(hitVector3.z));
+                var voxel = hit.ToVoxel();
                 var offset = new float3(0.5f, 0.5f, 0.5f);
-                HighlightXYZ = new int3(floor + offset);
-                if (!transform.position.Equals(floor + offset))
-                    transform.position = floor + offset;
+                if (!transform.position.Equals(voxel + offset))
+                    transform.position = voxel + offset;
             }
         }
 
-        public void Place(InputAction.CallbackContext context)
-        {
-            if (!context.started) return;
-            if (Camera.main == null) return;
-            Place(Mouse.current.position.ReadValue());
-        }
-        public void Place(Vector2 screenPoint)
-        {
-            var ray = Camera.main.ScreenPointToRay(screenPoint);
-            RaycastHit hit;
-            if (!Physics.Raycast(ray, out hit)) return;
-            var voxelAdjacent = (hit.point + hit.normal * 0.05f).ToInt3();
-
-            // Get Toolbar data
-            var toolbarEntity = _em.CreateEntityQuery(typeof(ToolbarData)).GetSingletonEntity();
-            var toolbarData = _em.GetComponentData<ToolbarData>(toolbarEntity);
-            var toolbarBlockStateRefs = _em.GetBuffer<BlockStateRef>(toolbarEntity);
-            
-            // Debug.Log($"Toolbar selected Item is : {toolbarData.SelectedItem}");
-            World.Instance.Place(voxelAdjacent, toolbarBlockStateRefs[ toolbarData.SelectedItem ]);
-        }
-
-
-
-        public void Remove(InputAction.CallbackContext context)
-        {
-            if (!context.started) return;
-            if (Camera.main == null) return;
-            Remove(Mouse.current.position.ReadValue());
-        }
-
-        public void Remove(Vector2 screenPoint)
-        {
-            var ray = Camera.main.ScreenPointToRay(screenPoint);
-            RaycastHit hit;
-            if (!Physics.Raycast(ray, out hit)) return;
-            var voxel = (hit.point - hit.normal * 0.05f).ToInt3();
-
-            // If the block to remove has changed or the remove action has been inactive, reset the counter and timer
-            if (!voxel.Equals(blockToRemove) || Time.time - removeStartTime > 0.5f)
-            {
-                blockToRemove = voxel;
-                removeCount = 0;
-                removeStartTime = Time.time;
-            }
-            removeCount++;
-
-            // If the counter has reached 5 within 1 second, remove the block
-            if (removeCount >= 5 && Time.time - removeStartTime <= 1)
-            {
-                World.Instance.Remove(blockToRemove);
-                removeCount = 0;
-                removeStartTime = Time.time;
-            }
-        }
-
-        public void Blueprint(InputAction.CallbackContext context)
-        {
-            // if (!context.performed) return;
-            // if (blueprintStartXyz.Equals(default))
-            //     blueprintStartXyz = highlightXyz;
-            // else
-            // {
-            //     var blueprint = ScriptableObject.CreateInstance<Blueprint>();
-            //     blueprint.name = "blueprint";
-            //     var startXyz = new int3(math.min(blueprintStartXyz.x, highlightXyz.x), math.min(blueprintStartXyz.y, highlightXyz.y), math.min(blueprintStartXyz.z, highlightXyz.z));
-            //     var endXyz = new int3(math.max(blueprintStartXyz.x, highlightXyz.x), math.max(blueprintStartXyz.y, highlightXyz.y), math.max(blueprintStartXyz.z, highlightXyz.z));
-            //     blueprint.dims = (endXyz - startXyz) + new int3(1,1,1);
-            //     var blueprintSize = (blueprint.dims.x) * (blueprint.dims.y) * (blueprint.dims.z);
-            //     blueprint.blocks = new Block[blueprintSize];
-            //     
-            //     for (var z = 0; z < blueprint.dims.z; z++)
-            //     for (var y = 0; y < blueprint.dims.y; y++)
-            //     for (var x = 0; x < blueprint.dims.x; x++)
-            //     {
-            //         var xyz = new int3(x, y, z);
-            //         var index = xyz.ToIndex(blueprint.dims);
-            //         var worldIndex = (startXyz + xyz).ToIndex(World.Instance.dims);
-            //         var blockIndex = World.Instance.voxels[worldIndex];
-            //         // blueprint.blocks[index] = Blocks.Instance.blocks[blockIndex];  // TODO will need to update for rotation/palette
-            //     }
-            //     blueprintStartXyz = default;
-            //     
-            //     var datetime = System.DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss");
-            //     var path = $"Assets/Blueprints/blueprint-{datetime}.asset";
-            //     UnityEditor.AssetDatabase.CreateAsset(blueprint, path);
-            //     Debug.Log($"Created blueprint at {path}");
-            // }
-        }
 
     }
 }

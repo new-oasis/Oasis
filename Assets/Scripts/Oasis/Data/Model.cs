@@ -13,6 +13,10 @@ namespace Oasis.Data
         public FixedString64Bytes Name;
         public BlockType Type;
         public TextureType TextureType;
+
+        public bool NonSolidBlocksMovement;
+        public float3 NonSolidHitBoxFrom;  // TODO compute automagically
+        public float3 NonSolidHitBoxTo;
     }
     
     public struct ModelElement : IComponentData

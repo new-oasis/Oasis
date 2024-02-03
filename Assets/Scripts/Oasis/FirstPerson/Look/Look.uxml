@@ -1,5 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/Scripts/Oasis/FirstPerson/Look/Look.uss?fileID=7433441132597879392&amp;guid=869faae4726094e5db87c7ccf4159cfa&amp;type=3#Look" />
-    <ui:VisualElement name="LookArea" style="flex-grow: 1;" />
-    <ui:VisualElement name="TouchIndicator" class="TouchIndicator" style="width: 120px; height: 120px; background-color: rgba(255, 255, 255, 0); border-left-color: rgb(255, 255, 255); border-right-color: rgb(255, 255, 255); border-top-color: rgb(255, 255, 255); border-bottom-color: rgb(255, 255, 255); border-top-width: 3px; border-right-width: 3px; border-bottom-width: 3px; border-left-width: 3px; border-top-left-radius: 100%; border-top-right-radius: 100%; border-bottom-right-radius: 100%; border-bottom-left-radius: 100%;" />
-</ui:UXML>

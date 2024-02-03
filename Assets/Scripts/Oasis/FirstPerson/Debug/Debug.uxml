@@ -1,5 +1,0 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
-    <Style src="project://database/Assets/UI%20Toolkit/oasis.uss?fileID=7433441132597879392&amp;guid=908cb4c3be74a4fd1a980a69501ecf95&amp;type=3#oasis" />
-    <Style src="project://database/Assets/Scripts/Oasis/Game/Player/FirstPerson/Debug/Debug.uss?fileID=7433441132597879392&amp;guid=4b96b16bf1a341b7acc2641889443005&amp;type=3#Debug" />
-    <ui:VisualElement name="debug" class="full-screen hud" style="display: flex;" />
-</ui:UXML>

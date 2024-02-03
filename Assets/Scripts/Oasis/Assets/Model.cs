@@ -11,10 +11,14 @@ namespace Oasis.Assets
     [CreateAssetMenu(fileName = "Model", menuName = "Oasis/Model", order = 2)]
     public class Model : SerializedScriptableObject
     {
-        public TextureType TextureType;
         public BlockType Type;
-        
+        public TextureType TextureType;
+
         public List<ModelElement> ModelElements;
+
+        public bool BlocksMovement;
+        public float3 NonSolidHitBoxFrom;  // TODO compute automagically
+        public float3 NonSolidHitBoxTo;
     }
 
     [Serializable]

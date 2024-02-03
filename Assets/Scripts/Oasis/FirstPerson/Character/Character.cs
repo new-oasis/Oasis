@@ -29,6 +29,7 @@ namespace Oasis.FirstPerson
             controller = GetComponent<CharacterController>();
             firstPersonInputs = new FirstPersonInputs();
             firstPersonInputs.Enable();
+            // Debug.Log("Character#Awake");
         }
 
         private void Update()
@@ -87,6 +88,7 @@ namespace Oasis.FirstPerson
 
         public void Jump(InputAction.CallbackContext context)
         {
+            Debug.Log("Character#Jump");
             if (context.started && controller.isGrounded)
                 velocity += jumpPower;
         }

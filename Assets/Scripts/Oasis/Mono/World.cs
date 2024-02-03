@@ -55,7 +55,7 @@ namespace Oasis.Mono
 
         public void Place(int3 voxel, BlockStateRef blockStateRef)
         {
-            Debug.Log($"Got voxel {voxel} and blockStateRef {_em.GetName(blockStateRef.Block)} blockStateIndex {blockStateRef.BlockStatesIndex}");
+            // Debug.Log($"Got voxel {voxel} and blockStateRef {_em.GetName(blockStateRef.Block)} blockStateIndex {blockStateRef.BlockStatesIndex}");
             var voxelIndex = voxel.ToIndex(_worldData.Dims);
 
             // Get worldBlockStateIndex
@@ -63,7 +63,7 @@ namespace Oasis.Mono
             var worldBlockStateIndex = worldBlockStates.AsNativeArray().IndexOf(blockStateRef);
             if (worldBlockStateIndex == -1)
                 Debug.LogError($"Could not find blockStateRef {blockStateRef} in worldBlockStates");
-            Debug.Log($"worldBlockStateIndex is : {worldBlockStateIndex}");
+            // Debug.Log($"worldBlockStateIndex is : {worldBlockStateIndex}");
             
             // Update voxel
             var voxels = _em.GetBuffer<Voxel>(_worldEntity);
