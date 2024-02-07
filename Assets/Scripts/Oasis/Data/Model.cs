@@ -14,8 +14,7 @@ namespace Oasis.Data
         public BlockType Type;
         public TextureType TextureType;
 
-        public ushort Light;
-        public float3 LightPosition;
+        public bool Light;
 
         public bool NonSolidBlocksMovement;
         public float3 NonSolidHitBoxFrom;  // TODO compute automagically

@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Oasis.Common;
+using Sirenix.OdinInspector;
+using UnityEditor;
 using UnityEngine;
 
 namespace Oasis.Assets
@@ -16,15 +18,23 @@ namespace Oasis.Assets
     [Serializable]
     public struct BlockState
     {
+        [HorizontalGroup("Split"), HideLabel]
         public List<State> States;
+
+        [HorizontalGroup("Split")]
+        [VerticalGroup("Split/Right")]
         public Model Model;
+        [VerticalGroup("Split/Right"), HideLabel]
         public BlockStateRotation Rotation;
     }
 
     [Serializable]
     public struct State
     {
+        [HorizontalGroup("Split"), HideLabel]
         public string Key;
+
+        [HorizontalGroup("Split"), HideLabel]
         public string Value;
     }
     

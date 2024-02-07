@@ -6,6 +6,9 @@ using UnityEngine.InputSystem;
 using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
+using System.Linq;
+using UnityEditor.Rendering;
+using Oasis.Data;
 
 namespace Oasis.FirstPerson
 {
@@ -57,13 +60,40 @@ namespace Oasis.FirstPerson
             if (!Physics.Raycast(ray, out hit)) return;
             var voxelAdjacent = hit.ToAdjacentVoxel();
 
-            // Get Toolbar data
+            // Get current block
             var toolbarEntity = _em.CreateEntityQuery(typeof(ToolbarData)).GetSingletonEntity();
             var toolbarData = _em.GetComponentData<ToolbarData>(toolbarEntity);
-            var toolbarBlockStateRefs = _em.GetBuffer<Data.BlockStateRef>(toolbarEntity);
-            
-            // Debug.Log($"Toolbar selected Item is : {toolbarData.SelectedItem}");
-            Oasis.Mono.World.Instance.Place(voxelAdjacent, toolbarBlockStateRefs[ toolbarData.SelectedItem ]);
+            var toolbarBlockStateRefs = _em.GetBuffer<BlockStateRef>(toolbarEntity);
+            var block = _em.GetComponentData<Block>(toolbarBlockStateRefs[ toolbarData.SelectedItem ].Block);
+            var blockStates = _em.GetBuffer<BlockState>(toolbarBlockStateRefs[ toolbarData.SelectedItem ].Block);
+
+            var blockStateRef = toolbarBlockStateRefs[ toolbarData.SelectedItem ];
+
+            // Get blockStateRef to attach
+            bool attachable = false;
+            for (int i = 0; i < blockStates.Length; i++)
+                for (int j = 0; j < blockStates[i].States.Length; j++)
+                    if (blockStates[i].States[j].Key == "attach") 
+                        attachable = true;
+
+            if (attachable)
+            {
+                Debug.Log("Block is attachable.  (has attach blockStates)");
+                var blockStateWithAttach = new State { Key = "attach", Value = hit.normal.ToSide()};
+                int blockStateIndex = -1; // Default to -1 if not found
+                for (int i = 0; i < blockStates.Length; i++)
+                    for (int j = 0; j < blockStates[i].States.Length; j++)
+                        if (blockStates[i].States[j].Equals(blockStateWithAttach))
+                            blockStateIndex = i;
+                if (blockStateIndex == -1) Debug.LogError("Could not find blockState with attach key " + blockStateWithAttach.Value);
+
+                blockStateRef = new BlockStateRef{
+                    Block = blockStateRef.Block,
+                    BlockStatesIndex = blockStateIndex
+                };
+            }
+
+            Oasis.Mono.World.Instance.Place(voxelAdjacent, blockStateRef);
         }
 
 

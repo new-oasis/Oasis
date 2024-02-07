@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TextureObject
   Type: 1
   Texture2D: {fileID: 2800000, guid: 2da582c6227e94c33a5e8b94d7b11c11, type: 3}
-  Index: 0
+  Index: 1

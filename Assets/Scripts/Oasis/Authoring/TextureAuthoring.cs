@@ -1,25 +1,23 @@
-using System.Linq;
-using Oasis.Common;
 using Oasis.Data;
-using Unity.Collections;
 using Unity.Entities;
-using UnityEditor;
 using UnityEngine;
-using Texture = Oasis.Assets.Texture;
-using World = Unity.Entities.World;
 
 namespace Oasis.Authoring
 {
 
     public class TextureAuthoring : MonoBehaviour
     {
-        public Texture Texture;
+        public Assets.Texture Texture;
         public int Index;
+
+        private int _previousTextureInstanceID;
 
         public class TextureBaker : Baker<TextureAuthoring>
         {
             public override void Bake(TextureAuthoring authoring)
             {
+                DependsOn(authoring.Texture);
+
                 var entity = GetEntity(TransformUsageFlags.None);
                 
                 // Texture
@@ -31,5 +29,6 @@ namespace Oasis.Authoring
                 });
             }
         }
+
     }
 }

@@ -123,6 +123,51 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &93244554
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 93244555}
+  - component: {fileID: 93244556}
+  m_Layer: 0
+  m_Name: Scratch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &93244555
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93244554}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1275616147}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &93244556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93244554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8717addb77f423b920919affbc42160, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Model: {fileID: 11400000, guid: 4d6905227492b4d1d80a8fb68bd83e14, type: 2}
 --- !u!1 &123283739
 GameObject:
   m_ObjectHideFlags: 0
@@ -400,6 +445,7 @@ Transform:
   - {fileID: 1947808041}
   - {fileID: 1770063855}
   - {fileID: 1189917375}
+  - {fileID: 1361053888}
   - {fileID: 230437252}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -872,7 +918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1275616147}
   m_Layer: 0
-  m_Name: Nonfull
+  m_Name: Nonsolid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -894,6 +940,7 @@ Transform:
   - {fileID: 483345923}
   - {fileID: 791208461}
   - {fileID: 2127369474}
+  - {fileID: 93244555}
   m_Father: {fileID: 1028312453}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1339448439
@@ -929,6 +976,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 70ab1cb0c02404623933456d92efd6d0, type: 2}
   - {fileID: 11400000, guid: 79779082f142245d7a658efe90579fb2, type: 2}
   - {fileID: 11400000, guid: ee21fc002ca46484c8d574ab3bcc37dc, type: 2}
+  - {fileID: 11400000, guid: 9107f911123df458a8abb024d32aafa1, type: 2}
 --- !u!4 &1339448442
 Transform:
   m_ObjectHideFlags: 0
@@ -944,6 +992,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 789020307}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1361053887
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1361053888}
+  - component: {fileID: 1361053889}
+  m_Layer: 0
+  m_Name: Scratch
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1361053888
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361053887}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 470977972}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1361053889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1361053887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bbe8ce271043e4bdd057d559f3a056, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Block: {fileID: 11400000, guid: 9107f911123df458a8abb024d32aafa1, type: 2}
 --- !u!1 &1382221633
 GameObject:
   m_ObjectHideFlags: 0
@@ -954,7 +1047,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1382221634}
   m_Layer: 0
-  m_Name: Full
+  m_Name: Solid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1357,7 +1450,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a62ca772a546078d6441a57a44ed28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorldType: 1
+  WorldType: 0
   Dims:
     x: 48
     y: 16
@@ -1477,7 +1570,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8717addb77f423b920919affbc42160, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Model: {fileID: 11400000, guid: 2bc09b46144b5436a94b7f88c6f00c7b, type: 2}
+  Model: {fileID: 11400000, guid: 3503f135d48014fa49bed30f0f69bb40, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

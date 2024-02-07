@@ -83,7 +83,7 @@ namespace Oasis.Data
          {
              return HashCode.Combine(Block, BlockStatesIndex);
          }
-     }
+    }
 }    
    
    

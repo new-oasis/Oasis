@@ -118,10 +118,25 @@ namespace Oasis.Mono
                     modelGO.name = $"{chunkVoxelXYZ.ToString()} {modelData.Name}";
 
                     modelGO.GetComponent<MeshFilter>().sharedMesh = modelMesh;
-                    modelGO.transform.parent = transform;
-                    modelGO.transform.localPosition = new Vector3(x, y, z);
                     ModelGameObjects.Add(chunkVoxelXYZ, modelGO);
                     Models.Add(chunkVoxelXYZ, blockStateRef);
+
+                    // Rotate model;  Assumes pivot in voxel center
+                    var rotationAngle = blockStates[blockStateRef.BlockStatesIndex].Rotation.Angle;
+                    var rotationAxis = blockStates[blockStateRef.BlockStatesIndex].Rotation.Axis;
+                    Quaternion rotation = Quaternion.identity;
+                    if (rotationAxis == 0)
+                        rotation = Quaternion.Euler(rotationAngle, 0, 0);
+                    else if (rotationAxis == 1)
+                        rotation = Quaternion.Euler(0, rotationAngle, 0);
+                    else if (rotationAxis == 2)
+                        rotation = Quaternion.Euler(0, 0, rotationAngle);
+                    modelGO.transform.localRotation = rotation;
+
+
+                    modelGO.transform.parent = transform;
+                    modelGO.transform.localPosition = new Vector3(x, y, z) + new Vector3(0.5f, 0.5f, 0.5f);
+
 
                     // Collider for playerTarget and playerMovement collider
                     var from = modelData.NonSolidHitBoxFrom;
@@ -136,16 +151,17 @@ namespace Oasis.Mono
 
 
                     // Add point light component to game object and set light intensity
-                    if (modelData.Light > 0)
+                    if (modelData.Light)
                     {
                         var lightGO = new GameObject("Light");
                         lightGO.transform.parent = modelGO.transform;
                         var light = lightGO.AddComponent<Light>();
                         light.type = LightType.Point;
-                        light.intensity = modelData.Light;
+                        // light.intensity = modelData.Light;
                         light.range = 10;
                         light.color = Color.white;
-                        lightGO.transform.localPosition = new Vector3(modelData.LightPosition.x, modelData.LightPosition.y, modelData.LightPosition.z);
+                        lightGO.transform.localPosition = new Vector3(0f, 0f, 0f);
+                        // lightGO.transform.localPosition = new Vector3(modelData.LightPosition.x, modelData.LightPosition.y, modelData.LightPosition.z);
                     
                         // Disable castShadows
                         // modelGO.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;

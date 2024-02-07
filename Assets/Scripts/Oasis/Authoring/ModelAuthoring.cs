@@ -38,8 +38,7 @@ namespace Oasis.Authoring
                     NonSolidBlocksMovement = authoring.Model.BlocksMovement,
                     NonSolidHitBoxFrom = authoring.Model.NonSolidHitBoxFrom /16f,
                     NonSolidHitBoxTo = authoring.Model.NonSolidHitBoxTo /16f,
-                    Light = authoring.Model.Light,
-                    LightPosition = authoring.Model.LightPosition
+                    Light = authoring.Model.Light
                 });
 
                 // ModelElements
@@ -192,29 +191,35 @@ namespace Oasis.Authoring
                                     break;
                             }
 
-                            v1 -= element.Rotation.Origin;
+                            v1 -= element.Rotation.Origin/16f;
                             v1 = math.mul(rotationMatrix, v1);
-                            v1 += element.Rotation.Origin;
+                            v1 += element.Rotation.Origin/16f;
 
-                            v2 -= element.Rotation.Origin;
+                            v2 -= element.Rotation.Origin/16f;
                             v2 = math.mul(rotationMatrix, v2);
-                            v2 += element.Rotation.Origin;
+                            v2 += element.Rotation.Origin/16f;
 
-                            v3 -= element.Rotation.Origin;
+                            v3 -= element.Rotation.Origin/16f;
                             v3 = math.mul(rotationMatrix, v3);
-                            v3 += element.Rotation.Origin;
+                            v3 += element.Rotation.Origin/16f;
 
-                            v4 -= element.Rotation.Origin;
+                            v4 -= element.Rotation.Origin/16f;
                             v4 = math.mul(rotationMatrix, v4);
-                            v4 += element.Rotation.Origin;
-
+                            v4 += element.Rotation.Origin/16f;
                         }
+
+                        // Offset after rotation to place pivot in center of voxel
+                        var offset = new float3(0.5f, 0.5f, 0.5f);
+                        v1 -= offset;
+                        v2 -= offset;
+                        v3 -= offset;
+                        v4 -= offset;
 
                         verts[f * 4 + 0] = new VertexStream0 { Position = v1 };
                         verts[f * 4 + 1] = new VertexStream0 { Position = v2 };
                         verts[f * 4 + 2] = new VertexStream0 { Position = v3 };
                         verts[f * 4 + 3] = new VertexStream0 { Position = v4 };
-
+                        // Debug.Log($"side: {face.Side} v1: {v1} v2: {v2} v3: {v3} v4: {v4}");
 
                         AddTris(tris, f);
                         AddTexCoord0(texCoord0, f, face.UV);
@@ -239,7 +244,9 @@ namespace Oasis.Authoring
                 var mesh = new Mesh();
                 Mesh.ApplyAndDisposeWritableMeshData(meshDataArray, mesh);
                 mesh.RecalculateNormals();
-                mesh.RecalculateBounds();
+                // mesh.RecalculateBounds();  // Recenters pivot point incorrectly unless verts centered
+                // mesh.bounds = new Bounds(Vector3.one * 0.5f, Vector3.one); // manually set bounds to voxel
+
                 return mesh;
             }
 

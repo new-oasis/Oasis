@@ -38,6 +38,11 @@ namespace Oasis.Authoring
                     // Model
                     var modelAuthoringComponent = GetModelAuthoringComponent(authoring, authoringBlockState);
                     blockState.Model = GetEntity(modelAuthoringComponent, TransformUsageFlags.None);
+                    blockState.Rotation = new BlockStateRotation{
+                        Axis = authoringBlockState.Rotation.Axis,
+                        Angle = authoringBlockState.Rotation.Angle,
+                    };
+                    Debug.Log($"Block {authoring.name} has rotation {blockState.Rotation.Axis} {blockState.Rotation.Angle}");
                     blockStates.Add(blockState);
                 } 
                 

@@ -12,13 +12,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f34d6a029efee4da4a9e3a04a45cc19f, type: 3}
   m_Name: Wall Torch
   m_EditorClassIdentifier: 
-  TextureType: 3
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
   Type: 2
+  TextureType: 3
   ModelElements:
   - From:
       x: -1
       y: 3.5
       z: 7
+    To:
+      x: 1
+      y: 13.5
+      z: 9
     ModelFaces:
     - Side: 1
       Texture: {fileID: 11400000, guid: e6507421b65dd4573a635b92dc589341, type: 2}
@@ -41,15 +54,15 @@ MonoBehaviour:
         y: 3.5
         z: 8
       Axis: 2
-      Angle: -22.5
-    To:
-      x: 1
-      y: 13.5
-      z: 9
+      Angle: 22.5
   - From:
       x: -1
       y: 3.5
       z: 0
+    To:
+      x: 1
+      y: 19.5
+      z: 16
     ModelFaces:
     - Side: 0
       Texture: {fileID: 11400000, guid: e6507421b65dd4573a635b92dc589341, type: 2}
@@ -72,15 +85,15 @@ MonoBehaviour:
         y: 3.5
         z: 8
       Axis: 2
-      Angle: -22.5
-    To:
-      x: 1
-      y: 19.5
-      z: 16
+      Angle: 22.5
   - From:
       x: -8
       y: 3.5
       z: 7
+    To:
+      x: 8
+      y: 19.5
+      z: 9
     ModelFaces:
     - Side: 2
       Texture: {fileID: 11400000, guid: e6507421b65dd4573a635b92dc589341, type: 2}
@@ -103,8 +116,18 @@ MonoBehaviour:
         y: 3.5
         z: 8
       Axis: 2
-      Angle: -22.5
-    To:
-      x: 8
-      y: 19.5
-      z: 9
+      Angle: 22.5
+  Light: 1
+  LightPosition:
+    x: 0.5
+    y: 0.625
+    z: 0.5
+  BlocksMovement: 0
+  NonSolidHitBoxFrom:
+    x: 0
+    y: 0
+    z: 0
+  NonSolidHitBoxTo:
+    x: 0
+    y: 0
+    z: 0

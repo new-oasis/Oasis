@@ -16,8 +16,7 @@ namespace Oasis.Assets
 
         public List<ModelElement> ModelElements;
 
-        public ushort Light;
-        public float3 LightPosition;
+        public bool Light;
 
         public bool BlocksMovement;
         public float3 NonSolidHitBoxFrom;  // TODO compute automagically

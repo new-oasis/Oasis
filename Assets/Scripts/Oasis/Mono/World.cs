@@ -62,8 +62,11 @@ namespace Oasis.Mono
             var worldBlockStates = _em.GetBuffer<BlockStateRef>(_worldEntity);
             var worldBlockStateIndex = worldBlockStates.AsNativeArray().IndexOf(blockStateRef);
             if (worldBlockStateIndex == -1)
-                Debug.LogError($"Could not find blockStateRef {blockStateRef} in worldBlockStates");
-            // Debug.Log($"worldBlockStateIndex is : {worldBlockStateIndex}");
+            {
+                worldBlockStates.Add(blockStateRef);
+                worldBlockStateIndex = worldBlockStates.Length - 1;
+                Debug.Log("Added block state to world");
+            }            
             
             // Update voxel
             var voxels = _em.GetBuffer<Voxel>(_worldEntity);

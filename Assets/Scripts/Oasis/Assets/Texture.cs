@@ -31,5 +31,6 @@ namespace Oasis.Assets
         {
             return HashCode.Combine(base.GetHashCode(), name);
         }
+    
     }
 }
