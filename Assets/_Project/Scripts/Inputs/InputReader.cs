@@ -2,14 +2,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
-using static Inputs;
+using static Oasis.Inputs;
 
 
 namespace Oasis
 {
 
     [CreateAssetMenu(fileName = "InputReader", menuName = "Oasis/Input Reader")]
-    public class InputReader : ScriptableObject, IBobActions, IGodActions
+    public class InputReader : ScriptableObject, IBobActions
     {
 
         public event UnityAction<Vector2> Move = delegate { };
@@ -20,20 +20,23 @@ namespace Oasis
 
         Inputs inputs;
 
+        public bool IsMouse;
         public Vector3 Direction => inputs.Bob.Move.ReadValue<Vector2>();
 
 
         void OnEnable()
         {
+            Debug.Log("ENABLING INPUT READER");
             // Instantiate the input system and set callbacks
             if (inputs == null)
             {
-                inputs = new Inputs();
-                inputs.Bob.SetCallbacks(this);
-                inputs.God.SetCallbacks(this);
+                // inputs = new Inputs();
+                // inputs.Bob.SetCallbacks(this);
+                // inputs.God.SetCallbacks(this);
             }
 
-            inputs.Bob.Enable();
+            // inputs.Bob.Enable();
+        Debug.Log("enabled bob");
         }
 
         public void OnMove(InputAction.CallbackContext context)
@@ -43,9 +46,11 @@ namespace Oasis
 
         public void OnLook(InputAction.CallbackContext context)
         {
-            Look.Invoke(context.ReadValue<Vector2>(), IsMouse(context));
+            Debug.Log("ass");
+            // Look.Invoke(context.ReadValue<Vector2>(), IsMouse(context));
+            Look.Invoke(context.ReadValue<Vector2>(), true);
         }
-        bool IsMouse(InputAction.CallbackContext context) => context.control.device == Mouse.current;
+        // bool IsMouse(InputAction.CallbackContext context) => context.control.device == Mouse.current;
 
 
         public void OnMouseLook(InputAction.CallbackContext context)

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3e11b1e86e43e42a89973bd11cc119a8
+guid: 8f8bd307d591e4d0aa110fd6da4d5485
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -11,4 +11,4 @@ ScriptedImporter:
   generateWrapperCode: 1
   wrapperCodePath: 
   wrapperClassName: 
-  wrapperCodeNamespace: Oasis
+  wrapperCodeNamespace: Scratch
