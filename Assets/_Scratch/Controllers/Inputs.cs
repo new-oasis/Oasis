@@ -26,7 +26,7 @@ namespace Scratch
     ""name"": ""Inputs"",
     ""maps"": [
         {
-            ""name"": ""Player"",
+            ""name"": ""Bob"",
             ""id"": ""ea08553e-b0b4-43fd-947d-fd151f1e3f77"",
             ""actions"": [
                 {
@@ -51,6 +51,15 @@ namespace Scratch
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""a2a13074-c60e-458b-bdee-8d79e08732fb"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""GodMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""5344ea54-f453-460f-8bbf-063e0e3795ce"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -178,6 +187,153 @@ namespace Scratch
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ef8d06e2-cb66-494d-a7c7-26148432d4e5"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GodMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""God"",
+            ""id"": ""9e9ba005-939c-4c0d-b1c6-5851948d8bee"",
+            ""actions"": [
+                {
+                    ""name"": ""Move"",
+                    ""type"": ""Value"",
+                    ""id"": ""fa94dbe9-551f-4135-8fc7-4ded0c0c015d"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""BobMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""a250cf30-9259-4325-bc3d-1f7fe0063e92"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""WASD"",
+                    ""id"": ""64c2910f-41e5-409a-881c-4355bb5dcbdb"",
+                    ""path"": ""Dpad"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Move"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""1e830d18-064b-48bb-a23e-7b8c286f8775"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""df7bd9a7-110d-4040-ace8-8dbbdf9a8409"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""e0f1b35c-0883-4eac-91bd-7918d2c1498d"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""31df4f23-e46a-423f-ad7e-6d7ff833a208"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""7611e44e-02f3-46f2-80c5-f7c200f3f44a"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""a33e25fd-1a0c-4aee-836c-6ff3a2a2dc96"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""007c8f06-f578-465f-a7f4-92d160dde9a6"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""776762c3-eab2-48db-9939-d2d5ac43c48a"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Move"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85df5362-bd96-4d58-a0ab-9fa9f9117345"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""BobMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -245,11 +401,16 @@ namespace Scratch
         }
     ]
 }");
-            // Player
-            m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-            m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
-            m_Player_Look = m_Player.FindAction("Look", throwIfNotFound: true);
-            m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
+            // Bob
+            m_Bob = asset.FindActionMap("Bob", throwIfNotFound: true);
+            m_Bob_Move = m_Bob.FindAction("Move", throwIfNotFound: true);
+            m_Bob_Look = m_Bob.FindAction("Look", throwIfNotFound: true);
+            m_Bob_Jump = m_Bob.FindAction("Jump", throwIfNotFound: true);
+            m_Bob_GodMode = m_Bob.FindAction("GodMode", throwIfNotFound: true);
+            // God
+            m_God = asset.FindActionMap("God", throwIfNotFound: true);
+            m_God_Move = m_God.FindAction("Move", throwIfNotFound: true);
+            m_God_BobMode = m_God.FindAction("BobMode", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -308,28 +469,30 @@ namespace Scratch
             return asset.FindBinding(bindingMask, out action);
         }
 
-        // Player
-        private readonly InputActionMap m_Player;
-        private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-        private readonly InputAction m_Player_Move;
-        private readonly InputAction m_Player_Look;
-        private readonly InputAction m_Player_Jump;
-        public struct PlayerActions
+        // Bob
+        private readonly InputActionMap m_Bob;
+        private List<IBobActions> m_BobActionsCallbackInterfaces = new List<IBobActions>();
+        private readonly InputAction m_Bob_Move;
+        private readonly InputAction m_Bob_Look;
+        private readonly InputAction m_Bob_Jump;
+        private readonly InputAction m_Bob_GodMode;
+        public struct BobActions
         {
             private @Inputs m_Wrapper;
-            public PlayerActions(@Inputs wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Move => m_Wrapper.m_Player_Move;
-            public InputAction @Look => m_Wrapper.m_Player_Look;
-            public InputAction @Jump => m_Wrapper.m_Player_Jump;
-            public InputActionMap Get() { return m_Wrapper.m_Player; }
+            public BobActions(@Inputs wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Move => m_Wrapper.m_Bob_Move;
+            public InputAction @Look => m_Wrapper.m_Bob_Look;
+            public InputAction @Jump => m_Wrapper.m_Bob_Jump;
+            public InputAction @GodMode => m_Wrapper.m_Bob_GodMode;
+            public InputActionMap Get() { return m_Wrapper.m_Bob; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
             public bool enabled => Get().enabled;
-            public static implicit operator InputActionMap(PlayerActions set) { return set.Get(); }
-            public void AddCallbacks(IPlayerActions instance)
+            public static implicit operator InputActionMap(BobActions set) { return set.Get(); }
+            public void AddCallbacks(IBobActions instance)
             {
-                if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
-                m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
+                if (instance == null || m_Wrapper.m_BobActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_BobActionsCallbackInterfaces.Add(instance);
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
@@ -339,9 +502,12 @@ namespace Scratch
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
+                @GodMode.started += instance.OnGodMode;
+                @GodMode.performed += instance.OnGodMode;
+                @GodMode.canceled += instance.OnGodMode;
             }
 
-            private void UnregisterCallbacks(IPlayerActions instance)
+            private void UnregisterCallbacks(IBobActions instance)
             {
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
@@ -352,23 +518,80 @@ namespace Scratch
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
+                @GodMode.started -= instance.OnGodMode;
+                @GodMode.performed -= instance.OnGodMode;
+                @GodMode.canceled -= instance.OnGodMode;
             }
 
-            public void RemoveCallbacks(IPlayerActions instance)
+            public void RemoveCallbacks(IBobActions instance)
             {
-                if (m_Wrapper.m_PlayerActionsCallbackInterfaces.Remove(instance))
+                if (m_Wrapper.m_BobActionsCallbackInterfaces.Remove(instance))
                     UnregisterCallbacks(instance);
             }
 
-            public void SetCallbacks(IPlayerActions instance)
+            public void SetCallbacks(IBobActions instance)
             {
-                foreach (var item in m_Wrapper.m_PlayerActionsCallbackInterfaces)
+                foreach (var item in m_Wrapper.m_BobActionsCallbackInterfaces)
                     UnregisterCallbacks(item);
-                m_Wrapper.m_PlayerActionsCallbackInterfaces.Clear();
+                m_Wrapper.m_BobActionsCallbackInterfaces.Clear();
                 AddCallbacks(instance);
             }
         }
-        public PlayerActions @Player => new PlayerActions(this);
+        public BobActions @Bob => new BobActions(this);
+
+        // God
+        private readonly InputActionMap m_God;
+        private List<IGodActions> m_GodActionsCallbackInterfaces = new List<IGodActions>();
+        private readonly InputAction m_God_Move;
+        private readonly InputAction m_God_BobMode;
+        public struct GodActions
+        {
+            private @Inputs m_Wrapper;
+            public GodActions(@Inputs wrapper) { m_Wrapper = wrapper; }
+            public InputAction @Move => m_Wrapper.m_God_Move;
+            public InputAction @BobMode => m_Wrapper.m_God_BobMode;
+            public InputActionMap Get() { return m_Wrapper.m_God; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(GodActions set) { return set.Get(); }
+            public void AddCallbacks(IGodActions instance)
+            {
+                if (instance == null || m_Wrapper.m_GodActionsCallbackInterfaces.Contains(instance)) return;
+                m_Wrapper.m_GodActionsCallbackInterfaces.Add(instance);
+                @Move.started += instance.OnMove;
+                @Move.performed += instance.OnMove;
+                @Move.canceled += instance.OnMove;
+                @BobMode.started += instance.OnBobMode;
+                @BobMode.performed += instance.OnBobMode;
+                @BobMode.canceled += instance.OnBobMode;
+            }
+
+            private void UnregisterCallbacks(IGodActions instance)
+            {
+                @Move.started -= instance.OnMove;
+                @Move.performed -= instance.OnMove;
+                @Move.canceled -= instance.OnMove;
+                @BobMode.started -= instance.OnBobMode;
+                @BobMode.performed -= instance.OnBobMode;
+                @BobMode.canceled -= instance.OnBobMode;
+            }
+
+            public void RemoveCallbacks(IGodActions instance)
+            {
+                if (m_Wrapper.m_GodActionsCallbackInterfaces.Remove(instance))
+                    UnregisterCallbacks(instance);
+            }
+
+            public void SetCallbacks(IGodActions instance)
+            {
+                foreach (var item in m_Wrapper.m_GodActionsCallbackInterfaces)
+                    UnregisterCallbacks(item);
+                m_Wrapper.m_GodActionsCallbackInterfaces.Clear();
+                AddCallbacks(instance);
+            }
+        }
+        public GodActions @God => new GodActions(this);
         private int m_KeyboardMouseSchemeIndex = -1;
         public InputControlScheme KeyboardMouseScheme
         {
@@ -414,11 +637,17 @@ namespace Scratch
                 return asset.controlSchemes[m_XRSchemeIndex];
             }
         }
-        public interface IPlayerActions
+        public interface IBobActions
         {
             void OnMove(InputAction.CallbackContext context);
             void OnLook(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
+            void OnGodMode(InputAction.CallbackContext context);
+        }
+        public interface IGodActions
+        {
+            void OnMove(InputAction.CallbackContext context);
+            void OnBobMode(InputAction.CallbackContext context);
         }
     }
 }
