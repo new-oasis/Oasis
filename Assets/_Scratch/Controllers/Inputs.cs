@@ -215,6 +215,15 @@ namespace Scratch
                     ""initialStateCheck"": true
                 },
                 {
+                    ""name"": ""Look"",
+                    ""type"": ""Value"",
+                    ""id"": ""538b859b-cd18-45b4-a4e3-e5564781cbe0"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""BobMode"",
                     ""type"": ""Button"",
                     ""id"": ""a250cf30-9259-4325-bc3d-1f7fe0063e92"",
@@ -334,6 +343,17 @@ namespace Scratch
                     ""action"": ""BobMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""28af1056-fc19-4ae0-ae0f-d1dfb28bbce2"",
+                    ""path"": ""<Pointer>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Look"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -410,6 +430,7 @@ namespace Scratch
             // God
             m_God = asset.FindActionMap("God", throwIfNotFound: true);
             m_God_Move = m_God.FindAction("Move", throwIfNotFound: true);
+            m_God_Look = m_God.FindAction("Look", throwIfNotFound: true);
             m_God_BobMode = m_God.FindAction("BobMode", throwIfNotFound: true);
         }
 
@@ -543,12 +564,14 @@ namespace Scratch
         private readonly InputActionMap m_God;
         private List<IGodActions> m_GodActionsCallbackInterfaces = new List<IGodActions>();
         private readonly InputAction m_God_Move;
+        private readonly InputAction m_God_Look;
         private readonly InputAction m_God_BobMode;
         public struct GodActions
         {
             private @Inputs m_Wrapper;
             public GodActions(@Inputs wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_God_Move;
+            public InputAction @Look => m_Wrapper.m_God_Look;
             public InputAction @BobMode => m_Wrapper.m_God_BobMode;
             public InputActionMap Get() { return m_Wrapper.m_God; }
             public void Enable() { Get().Enable(); }
@@ -562,6 +585,9 @@ namespace Scratch
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Look.started += instance.OnLook;
+                @Look.performed += instance.OnLook;
+                @Look.canceled += instance.OnLook;
                 @BobMode.started += instance.OnBobMode;
                 @BobMode.performed += instance.OnBobMode;
                 @BobMode.canceled += instance.OnBobMode;
@@ -572,6 +598,9 @@ namespace Scratch
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
+                @Look.started -= instance.OnLook;
+                @Look.performed -= instance.OnLook;
+                @Look.canceled -= instance.OnLook;
                 @BobMode.started -= instance.OnBobMode;
                 @BobMode.performed -= instance.OnBobMode;
                 @BobMode.canceled -= instance.OnBobMode;
@@ -647,6 +676,7 @@ namespace Scratch
         public interface IGodActions
         {
             void OnMove(InputAction.CallbackContext context);
+            void OnLook(InputAction.CallbackContext context);
             void OnBobMode(InputAction.CallbackContext context);
         }
     }

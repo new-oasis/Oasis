@@ -62,7 +62,6 @@ namespace Scratch
 
 	
 		private CharacterController _controller;
-		// private StarterAssetsInputs _input;
 		private GameObject _mainCamera;
 
 		private const float _threshold = 0.01f;
@@ -75,13 +74,12 @@ namespace Scratch
 		private void Start()
 		{
 			_controller = GetComponent<CharacterController>();
-			// _input = GetComponent<StarterAssetsInputs>();
 
 			// reset our timeouts on start
 			_jumpTimeoutDelta = JumpTimeout;
 			_fallTimeoutDelta = FallTimeout;
 
-			inputReader.Look += OnLook;
+			inputReader.BobLook += OnLook;
 		}
 
 		private void Update()
@@ -89,7 +87,7 @@ namespace Scratch
 			Jump();
             ComputeGravity();
 			GroundedCheck();
-			Move();
+			Move(); // Every frame for acceleration and deceleration
 		}
 
 		private void LateUpdate()
@@ -131,14 +129,14 @@ namespace Scratch
 			float targetSpeed = sprint ? SprintSpeed : MoveSpeed;
 
 			// if there is no input, set the target speed to 0
-			if (inputReader.Direction == Vector2.zero) targetSpeed = 0.0f;
+			if (inputReader.BobDirection == Vector2.zero) targetSpeed = 0.0f;
 
 			// a reference to the players current horizontal velocity
 			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
 			float speedOffset = 0.1f;
 			// float inputMagnitude = _input.analogMovement ? _input.magnitude : 1f;
-			float inputMagnitude = inputReader.Direction.magnitude;
+			float inputMagnitude = inputReader.BobDirection.magnitude;
 
 			// accelerate or decelerate to target speed
 			if (currentHorizontalSpeed < targetSpeed - speedOffset || currentHorizontalSpeed > targetSpeed + speedOffset)
@@ -156,11 +154,11 @@ namespace Scratch
 			}
 
 			// normalise input direction
-			Vector3 inputDirection = new Vector3(inputReader.Direction.x, 0.0f, inputReader.Direction.y).normalized;
+			Vector3 inputDirection = new Vector3(inputReader.BobDirection.x, 0.0f, inputReader.BobDirection.y).normalized;
 
 			// if there is a move input rotate player when the player is moving
-			if (inputReader.Direction != Vector2.zero)
-				inputDirection = transform.right * inputReader.Direction.x + transform.forward * inputReader.Direction.y;
+			if (inputReader.BobDirection != Vector2.zero)
+				inputDirection = transform.right * inputReader.BobDirection.x + transform.forward * inputReader.BobDirection.y;
 
 			// move the player
 			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
@@ -229,3 +227,4 @@ namespace Scratch
 		}
 	}
 }
+
