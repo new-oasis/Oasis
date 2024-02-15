@@ -2,11 +2,11 @@ using Cinemachine;
 using Oasis.Bob;
 using UnityEngine;
 
-namespace Scratch
+namespace Oasis
 {
 	public class GodController : MonoBehaviour
 	{
-		public Scratch.InputReader	inputReader;
+		public Oasis.InputReader	inputReader;
 
 		[Header("God")]
 		public float MoveSpeed = 4.0f;

@@ -75,15 +75,6 @@ namespace Oasis
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Blueprint"",
-                    ""type"": ""Button"",
-                    ""id"": ""8575b814-c852-4371-a146-ddcdbddd0e6a"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""a2a13074-c60e-458b-bdee-8d79e08732fb"",
@@ -93,25 +84,7 @@ namespace Oasis
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""RotateClockwise"",
-                    ""type"": ""Button"",
-                    ""id"": ""7d577416-4439-4019-ab0b-18c479024c71"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""RotateCounterClockwise"",
-                    ""type"": ""Button"",
-                    ""id"": ""83ecc56e-42b5-4f37-9883-105597c2aa16"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""God"",
+                    ""name"": ""GodMode"",
                     ""type"": ""Button"",
                     ""id"": ""d421545d-0775-4d3b-b120-91f2de9ca23e"",
                     ""expectedControlType"": ""Button"",
@@ -255,17 +228,6 @@ namespace Oasis
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d9feaec9-1e37-4755-95df-d28cacd24301"",
-                    ""path"": ""<Keyboard>/#(B)"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Blueprint"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""a50a51d2-1c82-4965-adf9-8c6529cf52e9"",
                     ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
@@ -398,34 +360,12 @@ namespace Oasis
                 },
                 {
                     ""name"": """",
-                    ""id"": ""4f0920db-b5f5-4cc0-91b2-986c8065d86e"",
-                    ""path"": ""<Keyboard>/e"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateClockwise"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""58b356cf-60f7-49f9-afc6-a528b74dc767"",
-                    ""path"": ""<Keyboard>/q"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""RotateCounterClockwise"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""716efe4d-d6ee-4763-9090-8c537cc78fbd"",
                     ""path"": ""<Keyboard>/tab"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""God"",
+                    ""action"": ""GodMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -436,16 +376,7 @@ namespace Oasis
             ""id"": ""3c94b57f-981f-49e7-87ce-3592fea5d54b"",
             ""actions"": [
                 {
-                    ""name"": ""Fire"",
-                    ""type"": ""Button"",
-                    ""id"": ""65be302d-bab9-422f-ab1b-0be073ae7fa5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""GodLook"",
+                    ""name"": ""Look"",
                     ""type"": ""Value"",
                     ""id"": ""35f28fe4-5463-456c-b665-fbc758086a5e"",
                     ""expectedControlType"": ""Vector2"",
@@ -463,7 +394,7 @@ namespace Oasis
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Bob"",
+                    ""name"": ""BobMode"",
                     ""type"": ""Button"",
                     ""id"": ""868100ac-b5aa-495e-b121-09b74c35c4d3"",
                     ""expectedControlType"": ""Button"",
@@ -612,7 +543,7 @@ namespace Oasis
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
-                    ""action"": ""GodLook"",
+                    ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -623,7 +554,7 @@ namespace Oasis
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse;Touch"",
-                    ""action"": ""GodLook"",
+                    ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -634,62 +565,7 @@ namespace Oasis
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Joystick"",
-                    ""action"": ""GodLook"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""6ebbcb89-494b-40e3-aaf7-3e8a6ef5082f"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""c954f51c-4ba5-40bb-a2ca-e5b15ac9a0ad"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard&Mouse"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""aafe5e72-4fb5-4519-9a17-98bbeac36b15"",
-                    ""path"": ""<Touchscreen>/primaryTouch/tap"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Touch"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""194e1243-3021-421b-bc9d-27e9d47a294d"",
-                    ""path"": ""<Joystick>/trigger"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Joystick"",
-                    ""action"": ""Fire"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""dcfd0351-a99e-42ef-9edc-4922e1780ad1"",
-                    ""path"": ""<XRController>/{PrimaryAction}"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""XR"",
-                    ""action"": ""Fire"",
+                    ""action"": ""Look"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -700,7 +576,7 @@ namespace Oasis
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Bob"",
+                    ""action"": ""BobMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1293,17 +1169,13 @@ namespace Oasis
             m_Bob_Look = m_Bob.FindAction("Look", throwIfNotFound: true);
             m_Bob_Place = m_Bob.FindAction("Place", throwIfNotFound: true);
             m_Bob_Remove = m_Bob.FindAction("Remove", throwIfNotFound: true);
-            m_Bob_Blueprint = m_Bob.FindAction("Blueprint", throwIfNotFound: true);
             m_Bob_Jump = m_Bob.FindAction("Jump", throwIfNotFound: true);
-            m_Bob_RotateClockwise = m_Bob.FindAction("RotateClockwise", throwIfNotFound: true);
-            m_Bob_RotateCounterClockwise = m_Bob.FindAction("RotateCounterClockwise", throwIfNotFound: true);
-            m_Bob_God = m_Bob.FindAction("God", throwIfNotFound: true);
+            m_Bob_GodMode = m_Bob.FindAction("GodMode", throwIfNotFound: true);
             // God
             m_God = asset.FindActionMap("God", throwIfNotFound: true);
-            m_God_Fire = m_God.FindAction("Fire", throwIfNotFound: true);
-            m_God_GodLook = m_God.FindAction("GodLook", throwIfNotFound: true);
+            m_God_Look = m_God.FindAction("Look", throwIfNotFound: true);
             m_God_Move = m_God.FindAction("Move", throwIfNotFound: true);
-            m_God_Bob = m_God.FindAction("Bob", throwIfNotFound: true);
+            m_God_BobMode = m_God.FindAction("BobMode", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1382,11 +1254,8 @@ namespace Oasis
         private readonly InputAction m_Bob_Look;
         private readonly InputAction m_Bob_Place;
         private readonly InputAction m_Bob_Remove;
-        private readonly InputAction m_Bob_Blueprint;
         private readonly InputAction m_Bob_Jump;
-        private readonly InputAction m_Bob_RotateClockwise;
-        private readonly InputAction m_Bob_RotateCounterClockwise;
-        private readonly InputAction m_Bob_God;
+        private readonly InputAction m_Bob_GodMode;
         public struct BobActions
         {
             private @Inputs m_Wrapper;
@@ -1396,11 +1265,8 @@ namespace Oasis
             public InputAction @Look => m_Wrapper.m_Bob_Look;
             public InputAction @Place => m_Wrapper.m_Bob_Place;
             public InputAction @Remove => m_Wrapper.m_Bob_Remove;
-            public InputAction @Blueprint => m_Wrapper.m_Bob_Blueprint;
             public InputAction @Jump => m_Wrapper.m_Bob_Jump;
-            public InputAction @RotateClockwise => m_Wrapper.m_Bob_RotateClockwise;
-            public InputAction @RotateCounterClockwise => m_Wrapper.m_Bob_RotateCounterClockwise;
-            public InputAction @God => m_Wrapper.m_Bob_God;
+            public InputAction @GodMode => m_Wrapper.m_Bob_GodMode;
             public InputActionMap Get() { return m_Wrapper.m_Bob; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1425,21 +1291,12 @@ namespace Oasis
                 @Remove.started += instance.OnRemove;
                 @Remove.performed += instance.OnRemove;
                 @Remove.canceled += instance.OnRemove;
-                @Blueprint.started += instance.OnBlueprint;
-                @Blueprint.performed += instance.OnBlueprint;
-                @Blueprint.canceled += instance.OnBlueprint;
                 @Jump.started += instance.OnJump;
                 @Jump.performed += instance.OnJump;
                 @Jump.canceled += instance.OnJump;
-                @RotateClockwise.started += instance.OnRotateClockwise;
-                @RotateClockwise.performed += instance.OnRotateClockwise;
-                @RotateClockwise.canceled += instance.OnRotateClockwise;
-                @RotateCounterClockwise.started += instance.OnRotateCounterClockwise;
-                @RotateCounterClockwise.performed += instance.OnRotateCounterClockwise;
-                @RotateCounterClockwise.canceled += instance.OnRotateCounterClockwise;
-                @God.started += instance.OnGod;
-                @God.performed += instance.OnGod;
-                @God.canceled += instance.OnGod;
+                @GodMode.started += instance.OnGodMode;
+                @GodMode.performed += instance.OnGodMode;
+                @GodMode.canceled += instance.OnGodMode;
             }
 
             private void UnregisterCallbacks(IBobActions instance)
@@ -1459,21 +1316,12 @@ namespace Oasis
                 @Remove.started -= instance.OnRemove;
                 @Remove.performed -= instance.OnRemove;
                 @Remove.canceled -= instance.OnRemove;
-                @Blueprint.started -= instance.OnBlueprint;
-                @Blueprint.performed -= instance.OnBlueprint;
-                @Blueprint.canceled -= instance.OnBlueprint;
                 @Jump.started -= instance.OnJump;
                 @Jump.performed -= instance.OnJump;
                 @Jump.canceled -= instance.OnJump;
-                @RotateClockwise.started -= instance.OnRotateClockwise;
-                @RotateClockwise.performed -= instance.OnRotateClockwise;
-                @RotateClockwise.canceled -= instance.OnRotateClockwise;
-                @RotateCounterClockwise.started -= instance.OnRotateCounterClockwise;
-                @RotateCounterClockwise.performed -= instance.OnRotateCounterClockwise;
-                @RotateCounterClockwise.canceled -= instance.OnRotateCounterClockwise;
-                @God.started -= instance.OnGod;
-                @God.performed -= instance.OnGod;
-                @God.canceled -= instance.OnGod;
+                @GodMode.started -= instance.OnGodMode;
+                @GodMode.performed -= instance.OnGodMode;
+                @GodMode.canceled -= instance.OnGodMode;
             }
 
             public void RemoveCallbacks(IBobActions instance)
@@ -1495,18 +1343,16 @@ namespace Oasis
         // God
         private readonly InputActionMap m_God;
         private List<IGodActions> m_GodActionsCallbackInterfaces = new List<IGodActions>();
-        private readonly InputAction m_God_Fire;
-        private readonly InputAction m_God_GodLook;
+        private readonly InputAction m_God_Look;
         private readonly InputAction m_God_Move;
-        private readonly InputAction m_God_Bob;
+        private readonly InputAction m_God_BobMode;
         public struct GodActions
         {
             private @Inputs m_Wrapper;
             public GodActions(@Inputs wrapper) { m_Wrapper = wrapper; }
-            public InputAction @Fire => m_Wrapper.m_God_Fire;
-            public InputAction @GodLook => m_Wrapper.m_God_GodLook;
+            public InputAction @Look => m_Wrapper.m_God_Look;
             public InputAction @Move => m_Wrapper.m_God_Move;
-            public InputAction @Bob => m_Wrapper.m_God_Bob;
+            public InputAction @BobMode => m_Wrapper.m_God_BobMode;
             public InputActionMap Get() { return m_Wrapper.m_God; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -1516,34 +1362,28 @@ namespace Oasis
             {
                 if (instance == null || m_Wrapper.m_GodActionsCallbackInterfaces.Contains(instance)) return;
                 m_Wrapper.m_GodActionsCallbackInterfaces.Add(instance);
-                @Fire.started += instance.OnFire;
-                @Fire.performed += instance.OnFire;
-                @Fire.canceled += instance.OnFire;
-                @GodLook.started += instance.OnGodLook;
-                @GodLook.performed += instance.OnGodLook;
-                @GodLook.canceled += instance.OnGodLook;
+                @Look.started += instance.OnLook;
+                @Look.performed += instance.OnLook;
+                @Look.canceled += instance.OnLook;
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
-                @Bob.started += instance.OnBob;
-                @Bob.performed += instance.OnBob;
-                @Bob.canceled += instance.OnBob;
+                @BobMode.started += instance.OnBobMode;
+                @BobMode.performed += instance.OnBobMode;
+                @BobMode.canceled += instance.OnBobMode;
             }
 
             private void UnregisterCallbacks(IGodActions instance)
             {
-                @Fire.started -= instance.OnFire;
-                @Fire.performed -= instance.OnFire;
-                @Fire.canceled -= instance.OnFire;
-                @GodLook.started -= instance.OnGodLook;
-                @GodLook.performed -= instance.OnGodLook;
-                @GodLook.canceled -= instance.OnGodLook;
+                @Look.started -= instance.OnLook;
+                @Look.performed -= instance.OnLook;
+                @Look.canceled -= instance.OnLook;
                 @Move.started -= instance.OnMove;
                 @Move.performed -= instance.OnMove;
                 @Move.canceled -= instance.OnMove;
-                @Bob.started -= instance.OnBob;
-                @Bob.performed -= instance.OnBob;
-                @Bob.canceled -= instance.OnBob;
+                @BobMode.started -= instance.OnBobMode;
+                @BobMode.performed -= instance.OnBobMode;
+                @BobMode.canceled -= instance.OnBobMode;
             }
 
             public void RemoveCallbacks(IGodActions instance)
@@ -1731,18 +1571,14 @@ namespace Oasis
             void OnLook(InputAction.CallbackContext context);
             void OnPlace(InputAction.CallbackContext context);
             void OnRemove(InputAction.CallbackContext context);
-            void OnBlueprint(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
-            void OnRotateClockwise(InputAction.CallbackContext context);
-            void OnRotateCounterClockwise(InputAction.CallbackContext context);
-            void OnGod(InputAction.CallbackContext context);
+            void OnGodMode(InputAction.CallbackContext context);
         }
         public interface IGodActions
         {
-            void OnFire(InputAction.CallbackContext context);
-            void OnGodLook(InputAction.CallbackContext context);
+            void OnLook(InputAction.CallbackContext context);
             void OnMove(InputAction.CallbackContext context);
-            void OnBob(InputAction.CallbackContext context);
+            void OnBobMode(InputAction.CallbackContext context);
         }
         public interface IUIActions
         {

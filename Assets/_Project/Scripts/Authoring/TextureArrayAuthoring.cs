@@ -38,7 +38,7 @@ namespace Oasis.Authoring
 
 
                 // Create Texture2DArray
-                var path = $"Assets/Resources/Textures/Texture2DArray_{authoring.TextureType}_{textureFormat}.asset";
+                var path = $"Assets/_Project/Resources/Textures/Texture2DArray_{authoring.TextureType}_{textureFormat}.asset";
                 if (AssetDatabase.LoadAssetAtPath(path, typeof(Texture2DArray)) as Texture2DArray)
                     authoring.Array = AssetDatabase.LoadAssetAtPath<Texture2DArray>(path);
                 else

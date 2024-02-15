@@ -1,3 +1,4 @@
+using Unity.Entities.UniversalDelegates;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,115 +10,98 @@ namespace Oasis
 {
 
     [CreateAssetMenu(fileName = "InputReader", menuName = "Oasis/Input Reader")]
-    public class InputReader : ScriptableObject, IBobActions
+    public class InputReader : ScriptableObject, IBobActions, IGodActions
     {
 
-        public event UnityAction<Vector2> Move = delegate { };
-        public event UnityAction<Vector2, bool> Look = delegate { };
+        public event UnityAction<Vector2> BobMove = delegate { };
+        public event UnityAction<Vector2> BobLook = delegate { };
 
-        public event UnityAction EnableMouseControlsCamera = delegate { };
-        public event UnityAction DisableMouseControlsCamera = delegate { };
+        public event UnityAction<Vector2> GodMove = delegate { };
+        public event UnityAction<Vector2> GodLook = delegate { };
 
-        Inputs inputs;
+        public event UnityAction GodMode = delegate { };
+        public event UnityAction BobMode = delegate { };
 
-        public bool IsMouse;
-        public Vector3 Direction => inputs.Bob.Move.ReadValue<Vector2>();
+        Oasis.Inputs inputs;
 
+        public Vector2 BobDirection => inputs.Bob.Move.ReadValue<Vector2>();
+        public Vector2 GodDirection => inputs.God.Move.ReadValue<Vector2>();
+        public bool jump;
+
+		private const float _threshold = 0.01f;
 
         void OnEnable()
         {
-            Debug.Log("ENABLING INPUT READER");
-            // Instantiate the input system and set callbacks
             if (inputs == null)
             {
-                // inputs = new Inputs();
-                // inputs.Bob.SetCallbacks(this);
-                // inputs.God.SetCallbacks(this);
-            }
+                inputs = new Oasis.Inputs();
+                inputs.Bob.SetCallbacks(this);
+                inputs.God.SetCallbacks(this);
 
-            // inputs.Bob.Enable();
-        Debug.Log("enabled bob");
-        }
-
-        public void OnMove(InputAction.CallbackContext context)
-        {
-            Move.Invoke(context.ReadValue<Vector2>());
-        }
-
-        public void OnLook(InputAction.CallbackContext context)
-        {
-            Debug.Log("ass");
-            // Look.Invoke(context.ReadValue<Vector2>(), IsMouse(context));
-            Look.Invoke(context.ReadValue<Vector2>(), true);
-        }
-        // bool IsMouse(InputAction.CallbackContext context) => context.control.device == Mouse.current;
-
-
-        public void OnMouseLook(InputAction.CallbackContext context)
-        {
-            switch (context.phase)
-            {
-                case InputActionPhase.Started:
-                    EnableMouseControlsCamera.Invoke();
-                    break;
-                case InputActionPhase.Canceled:
-                    DisableMouseControlsCamera.Invoke();
-                    break;
+                inputs.Bob.Enable();
+                inputs.God.Disable();
             }
         }
 
-
-
-
-
-
-
-
-
-
-        public void OnBlueprint(InputAction.CallbackContext context)
+        // --- Bob Actions ---
+        void IBobActions.OnMove(InputAction.CallbackContext context)
         {
+            BobMove.Invoke(context.ReadValue<Vector2>());
         }
 
-        public void OnGod(InputAction.CallbackContext context)
+        void IBobActions.OnLook(InputAction.CallbackContext context)
         {
+			var value = context.ReadValue<Vector2>();
+			if (value.sqrMagnitude >= _threshold)
+                BobLook.Invoke(context.ReadValue<Vector2>());
         }
 
-        public void OnJump(InputAction.CallbackContext context)
+        void IBobActions.OnJump(InputAction.CallbackContext context)
         {
+            jump = (context.phase == InputActionPhase.Started || context.phase == InputActionPhase.Performed);
         }
 
-        public void OnPlace(InputAction.CallbackContext context)
+        void IBobActions.OnGodMode(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
+            inputs.Bob.Disable();
+            inputs.God.Enable();
+            GodMode.Invoke();
         }
 
-        public void OnRemove(InputAction.CallbackContext context)
-        {
-        }
-
-        public void OnRotateClockwise(InputAction.CallbackContext context)
-        {
-        }
-
-        public void OnRotateCounterClockwise(InputAction.CallbackContext context)
-        {
-        }
-
-        public void OnToolbar(InputAction.CallbackContext context)
-        {
-        }
-
-
-
-        // God Actions
-        public void OnFire(InputAction.CallbackContext context)
+        void IBobActions.OnToolbar(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
             throw new System.NotImplementedException();
         }
 
-        public void OnBob(InputAction.CallbackContext context)
+        void IBobActions.OnPlace(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
             throw new System.NotImplementedException();
+        }
+
+        void IBobActions.OnRemove(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            throw new System.NotImplementedException();
+        }
+
+
+
+
+        // --- God Actions ---
+        void IGodActions.OnMove(InputAction.CallbackContext context)
+        {
+            GodMove.Invoke(context.ReadValue<Vector2>());
+        }
+
+        void IGodActions.OnLook(InputAction.CallbackContext context)
+        {
+            GodLook.Invoke(context.ReadValue<Vector2>());
+        }
+
+        void IGodActions.OnBobMode(InputAction.CallbackContext context)
+        {
+            inputs.Bob.Enable();
+            inputs.God.Disable();
+            BobMode.Invoke();
         }
     }
 
