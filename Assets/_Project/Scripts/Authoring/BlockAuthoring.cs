@@ -54,7 +54,7 @@ namespace Oasis.Authoring
                     BlockType = authoring.Block.BlockType,
                     TextureType = authoring.Block.TextureType,
                 });
-                World.All[0].EntityManager.SetName(entity, authoring.Block.name);
+                Unity.Entities.World.All[0].EntityManager.SetName(entity, authoring.Block.name);
             }
 
             private static ModelAuthoring GetModelAuthoringComponent(BlockAuthoring authoring, Assets.BlockState blockState)

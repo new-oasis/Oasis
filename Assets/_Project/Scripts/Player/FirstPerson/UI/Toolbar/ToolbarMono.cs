@@ -8,11 +8,10 @@ using UnityEngine.UIElements;
 
 namespace Oasis.Bob
 {
-    public class Toolbar : MonoBehaviour
+    public class ToolbarMono : MonoBehaviour
     {
-        private static Toolbar _instance;
-        public static Toolbar Instance => _instance;
-    
+        public InputReader inputReader;
+
         public Entity ToolbarEntity;
     
         private UQueryBuilder<VisualElement> _slots;
@@ -26,7 +25,8 @@ namespace Oasis.Bob
     
         private void Start()
         {
-            _instance = this;
+            inputReader.ToolbarSelect += SetActiveItem;
+
             _em = Unity.Entities.World.DefaultGameObjectInjectionWorld.EntityManager;
             // var worldEntity = _em.CreateEntityQuery(typeof(Data.World)).GetSingletonEntity();
             // var bockStates = em.GetBuffer<BlockState>(worldEntity);
@@ -66,31 +66,6 @@ namespace Oasis.Bob
             }
 
             SetActiveItem(0);
-        }
-    
-        public void SetActiveItem(InputAction.CallbackContext context)
-        {
-            if (!context.started) return;
-            if (((KeyControl) context.control).keyCode == Key.Digit1)
-                SetActiveItem(0);
-            else if (((KeyControl) context.control).keyCode == Key.Digit2)
-                SetActiveItem(1);
-            else if (((KeyControl) context.control).keyCode == Key.Digit3)
-                SetActiveItem(2);
-            else if (((KeyControl) context.control).keyCode == Key.Digit4)
-                SetActiveItem(3);
-            else if (((KeyControl) context.control).keyCode == Key.Digit5)
-                SetActiveItem(4);
-            else if (((KeyControl) context.control).keyCode == Key.Digit6)
-                SetActiveItem(5);
-            else if (((KeyControl) context.control).keyCode == Key.Digit7)
-                SetActiveItem(6);
-            else if (((KeyControl) context.control).keyCode == Key.Digit8)
-                SetActiveItem(7);
-            else if (((KeyControl) context.control).keyCode == Key.Digit9)
-                SetActiveItem(8);
-            else if (((KeyControl) context.control).keyCode == Key.Digit0)
-                SetActiveItem(9);
         }
     
         public void SetActiveItem(int slotIndex)
